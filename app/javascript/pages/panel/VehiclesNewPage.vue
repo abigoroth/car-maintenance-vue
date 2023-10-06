@@ -61,12 +61,12 @@ const vehicle: Vehicle = {
 };
 const submit = () => {
   const formData = new FormData();
-  formData.append('make', JSON.stringify(vehicle.make));
-  formData.append('model', JSON.stringify(vehicle.model));
-  formData.append('year', JSON.stringify(vehicle.year));
-  formData.append('vin_number', JSON.stringify(vehicle.vin_number));
-  formData.append('plate_number', JSON.stringify(vehicle.plate_number));
-  formData.append('mileage', JSON.stringify(vehicle.mileage));
+  formData.append('make', vehicle.make);
+  formData.append('model', vehicle.model);
+  formData.append('year', vehicle.year.toString());
+  formData.append('vin_number', vehicle.vin_number);
+  formData.append('plate_number', vehicle.plate_number);
+  formData.append('mileage', vehicle.mileage.toString());
 
   axios
     .post('/api/v1/vehicles', formData, {})
