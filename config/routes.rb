@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
-  root to: 'application#website'
-
   devise_for :users, defaults: { format: :json }, skip: :all
+  namespace :api do
+    namespace :v1 do
+      resources :vehicles
+    end
+  end
   devise_scope :user do
     # If you change these urls and helpers, you must change these files too:
     # - config/initializers/devise.rb#JWT Devise
@@ -14,4 +16,7 @@ Rails.application.routes.draw do
 
   get '/panel(/*path)', to: 'application#panel', as: :panel
   get '/(*path)', to: 'application#website', as: :website
+
+  mount Sidekiq::Web => '/sidekiq'
+  root to: 'application#website'
 end

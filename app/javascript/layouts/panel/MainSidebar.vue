@@ -9,7 +9,7 @@
       <p>Vue.js</p>
     </div>
     <ul>
-      <li class="active">
+      <li :class="isActive('')">
         <router-link
           :to="{
             name: 'index',
@@ -19,26 +19,18 @@
           My Dashboard
         </router-link>
       </li>
-      <li>
-        <span class="item">Posts</span>
-      </li>
-      <li>
-        <span class="item">Categories</span>
-      </li>
-      <li>
-        <span class="item">Messages</span>
-      </li>
-      <li>
-        <span class="item">Companies</span>
-      </li>
-      <li>
-        <span class="item">Users</span>
-      </li>
-      <li>
-        <span class="item">Settings</span>
+      <li :class="isActive('vehicles')">
+        <router-link :to="{ name: 'vehicles' }" class="item"> Vehicle </router-link>
       </li>
     </ul>
   </nav>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+function isActive(path: string) {
+  return router.currentRoute.value.path == '/' + path ? 'active' : 'item';
+}
+</script>

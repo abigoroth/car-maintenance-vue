@@ -1,0 +1,81 @@
+<template>
+  <div class="form">
+    <div class="form-box pt-25">
+      <div class="form-bg py-30 px-50">
+        <form @submit.prevent="submit">
+          <div class="field pb-25">
+            <label for="make">make</label>
+            <input v-model="vehicle.make" type="make" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="model">model</label>
+            <input v-model="vehicle.model" type="model" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="year">year</label>
+            <input v-model="vehicle.year" type="year" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="vin_number">vin_number</label>
+            <input v-model="vehicle.vin_number" type="vin_number" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="mileage">mileage</label>
+            <input v-model="vehicle.mileage" type="mileage" />
+          </div>
+
+          <div class="field pb-25">
+            <input class="submit" type="submit" name="submit" value="Add" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { showToast } from '@/utils/showToast';
+
+const router = useRouter();
+
+type Vehicle = {
+  make: string;
+  model: string;
+  year: number | null;
+  plate_number: string;
+  vin_number: string;
+  mileage: number;
+};
+const vehicle: Vehicle = {
+  make: '',
+  model: '',
+  year: null,
+  vin_number: '',
+  mileage: 0,
+  plate_number: '',
+};
+const submit = () => {
+  const formData = new FormData();
+  formData.append('make', JSON.stringify(vehicle.make));
+  formData.append('model', JSON.stringify(vehicle.model));
+  formData.append('year', JSON.stringify(vehicle.year));
+  formData.append('vin_number', JSON.stringify(vehicle.vin_number));
+  formData.append('plate_number', JSON.stringify(vehicle.plate_number));
+  formData.append('mileage', JSON.stringify(vehicle.mileage));
+
+  axios
+    .post('/api/v1/vehicles', formData, {})
+    .then(() => {
+      router.push({ name: 'vehicles' });
+    })
+    .catch((error) => {
+      console.log(error.response.data.errors);
+      showToast(error.response.data.errors[0], 'error');
+    });
+};
+</script>

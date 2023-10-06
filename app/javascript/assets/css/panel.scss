@@ -1,4 +1,7 @@
 @import './css_reset';
+@import './variables';
+@import './general';
+@import './form.scss';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 * {
@@ -73,6 +76,12 @@ body {
           .icon {
             color: #0c7db1;
           }
+        }
+        .router-link-active {
+          color: black !important;
+        }
+        a {
+          color: white;
         }
       }
     }
