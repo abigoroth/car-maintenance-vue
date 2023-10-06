@@ -1,10 +1,14 @@
 import { defineConfig } from 'vite';
 import RubyPlugin from 'vite-plugin-ruby';
 import vue from '@vitejs/plugin-vue';
+const path = require('path')
 
 export default defineConfig({
   resolve: {
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+    alias: {
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+    }
   },
   plugins: [vue(), RubyPlugin()],
   css: {
