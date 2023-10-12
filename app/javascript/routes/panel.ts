@@ -1,4 +1,5 @@
 const Index = () => import('@/pages/panel/IndexPage.vue');
+const Contact = () => import('@/pages/panel/ContactPage.vue');
 const Vehicles = () => import('@/pages/panel/VehiclesPage.vue');
 const VehiclesNew = () => import('@/pages/panel/VehiclesNewPage.vue');
 
@@ -22,6 +23,13 @@ const routes = [
     name: 'vehiclesNew',
     components: {
       default: VehiclesNew,
+    },
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    components: {
+      default: Contact,
     },
   },
 ];

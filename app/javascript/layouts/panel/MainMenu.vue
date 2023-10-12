@@ -1,15 +1,28 @@
 <template>
-  <ul class="navbar-nav">
-    <li class="nav-item">Profile</li>
-    <li class="nav-item" @click="logout">Logout</li>
-  </ul>
+  <footer>
+    <nav class="mobile-nav">
+      <router-link :to="{ name: 'index' }" class="bloc-icon" :class="isActive('')">
+        Upcoming
+        <span class="material-symbols-outlined"> handyman </span>
+      </router-link>
+      <router-link :to="{ name: 'vehicles' }" class="bloc-icon" :class="isActive('vehicles')">
+        Vehicle
+        <span class="material-symbols-outlined"> transportation </span>
+      </router-link>
+
+      <router-link :to="{ name: 'contact' }" class="bloc-icon" :class="isActive('contact')">
+        Contact
+        <span class="material-symbols-outlined"> contact_support </span>
+      </router-link>
+    </nav>
+  </footer>
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth.store';
-const authStore = useAuthStore();
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
-const logout = () => {
-  authStore.logout();
-};
+function isActive(path: string) {
+  return router.currentRoute.value.path == '/' + path ? 'active' : 'item';
+}
 </script>
