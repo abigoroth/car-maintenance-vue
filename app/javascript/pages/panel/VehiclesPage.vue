@@ -16,6 +16,7 @@
         <td>{{ vehicle.year }}</td>
         <td>{{ vehicle.mileage }}</td>
         <td>{{ vehicle.vin_number }}</td>
+        <td>{{ vehicle.plate_number }}</td>
       </tr>
     </tbody>
     <tbody></tbody>

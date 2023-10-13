@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_073422) do
     t.string "vin_number"
     t.integer "mileage"
     t.integer "user_id"
+    t.string "plate_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -14,7 +14,7 @@ module Api::V1
     end
 
     def vehicle_params
-      params.permit(:make, :model, :year, :vin_number, :mileage)
+      params.permit(:make, :model, :year, :vin_number, :mileage, :plate_number)
     end
 
   end

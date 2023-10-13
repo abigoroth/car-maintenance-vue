@@ -4,18 +4,28 @@
       <div class="form-bg py-30 px-50">
         <form @submit.prevent="submit">
           <div class="field pb-25">
-            <label for="make">make</label>
-            <input v-model="vehicle.make" type="make" />
+            <label for="make">Make</label>
+            <input v-model="vehicle.make" type="make" placeholder="Proton" />
           </div>
 
           <div class="field pb-25">
-            <label for="model">model</label>
-            <input v-model="vehicle.model" type="model" />
+            <label for="model">Model</label>
+            <input v-model="vehicle.model" type="text" placeholder="Persona" />
           </div>
 
           <div class="field pb-25">
-            <label for="year">year</label>
-            <input v-model="vehicle.year" type="year" />
+            <label for="year">Year</label>
+            <input v-model="vehicle.year" type="number" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="mileage">Mileage</label>
+            <input v-model="vehicle.mileage" type="number" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="mileage">Plate Number</label>
+            <input v-model="vehicle.plate_number" type="text" />
           </div>
 
           <div class="field pb-25">
@@ -24,12 +34,8 @@
           </div>
 
           <div class="field pb-25">
-            <label for="mileage">mileage</label>
-            <input v-model="vehicle.mileage" type="mileage" />
-          </div>
-
-          <div class="field pb-25">
             <input class="submit" type="submit" name="submit" value="Add" />
+            <button class="btn btn-secondary w-100 p-2 mt-2" @click="$router.go(-1)">Cancel</button>
           </div>
         </form>
       </div>

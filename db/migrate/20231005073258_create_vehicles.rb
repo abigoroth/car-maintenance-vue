@@ -7,6 +7,7 @@ class CreateVehicles < ActiveRecord::Migration[7.0]
       t.string :vin_number
       t.integer :mileage
       t.integer :user_id
+      t.string :plate_number
 
       t.timestamps
     end
