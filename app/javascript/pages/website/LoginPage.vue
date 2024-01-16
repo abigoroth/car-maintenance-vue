@@ -35,6 +35,8 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted, computed } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { IUserLogin } from '@/types/general';
 import { showToast } from '@/utils/showToast';
@@ -53,10 +55,22 @@ const redirectToPanel = () => {
 const showMessage = ref(false);
 
 const loggedIn = computed(() => authStore.isAuthenticated);
+const router = useRouter();
 
 onMounted(() => {
   if (loggedIn.value) {
-    redirectToPanel();
+    axios
+      .get('/check_auth')
+      .then((response) => {
+        if (response.status == 200) {
+          redirectToPanel();
+        }
+      })
+      .catch((error) => {
+        authStore.logout();
+        console.log(error.response.data.errors);
+        showToast(error.response.data.errors[0], 'error');
+      });
   }
 });
 

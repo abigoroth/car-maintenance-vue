@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
 
     render template: 'layouts/panel'
   end
+
+  def check_auth
+    head :forbidden unless user_signed_in?
+  end
 end
