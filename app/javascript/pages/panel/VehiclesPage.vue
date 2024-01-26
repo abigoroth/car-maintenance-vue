@@ -11,7 +11,12 @@
     </thead>
     <tbody>
       <tr v-for="vehicle in vehicles" :key="vehicle.id">
-        <td>{{ vehicle.make }}</td>
+        <td>
+          {{ vehicle.make }}
+          <router-link :to="{ name: 'vehicleShow', params: { id: vehicle.id } }" class="item">
+            Show
+          </router-link>
+        </td>
         <td>{{ vehicle.model }}</td>
         <td>{{ vehicle.year }}</td>
         <td>{{ vehicle.mileage }}</td>

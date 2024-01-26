@@ -13,6 +13,10 @@ module Api::V1
       render json: Vehicle.all
     end
 
+    def show
+      render json: Vehicle.find(params[:id])
+    end
+
     def vehicle_params
       params.permit(:make, :model, :year, :vin_number, :mileage, :plate_number)
     end

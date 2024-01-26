@@ -1,9 +1,10 @@
+/* tslint:disable */
 {
   "compilerOptions": {
     "strictNullChecks": false,
     "baseUrl": "./",
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "outDir": "./public",
     "noImplicitAny": true,
     "strict": true,

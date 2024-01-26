@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :users, defaults: { format: :json }, skip: :all
   namespace :api do
     namespace :v1 do
-      resources :vehicles
+      resources :vehicles do
+        resources :maintenance_schedules
+      end
+      resources :parts
     end
   end
   devise_scope :user do
