@@ -4,7 +4,8 @@
     "format": "prettier ./**/*.{js,css,scss,md,vue,json,ts} --write",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "dev": "./bin/vite dev"
+    "dev": "./bin/vite dev",
+    "build": "vite build --outDir public"
   },
   "dependencies": {
     "@babel/types": "^7.21.5",
@@ -46,5 +47,6 @@
       "yarn lint"
     ],
     "*.{js,css,scss,md,vue,json}": "prettier --write"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

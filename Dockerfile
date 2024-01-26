@@ -1,93 +1,87 @@
-ARG RUBY_VERSION
-ARG IMAGE_FLAVOUR=alpine
+# syntax = docker/dockerfile:1
 
-FROM ruby:$RUBY_VERSION-$IMAGE_FLAVOUR AS base
+# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.2.2
+FROM ruby:$RUBY_VERSION-slim as base
 
-# Install system dependencies required both at runtime and build time
-ARG NODE_VERSION
-ARG YARN_VERSION
-ARG BUNDLER_VERSION
+LABEL fly_launch_runtime="rails"
 
-RUN apk add --update \
-  git \
-  postgresql-dev \
-  tzdata \
-  nodejs=$NODE_VERSION \
-  yarn=$YARN_VERSION
+# Rails app lives here
+WORKDIR /rails
 
-# Upgrade RubyGems and install the latest Bundler version
-RUN gem update --system && \
-    rm /usr/local/lib/ruby/gems/*/specifications/default/bundler-*.gemspec && \
-    gem uninstall bundler && \
-    gem install bundler -v $BUNDLER_VERSION --no-document
+# Set production environment
+ENV RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_DEPLOYMENT="1" \
+    SECRET_KEY_BASE="insecure-key" \
+    DEVISE_JWT_SECRET_KEY="my-jwt-secret-key" \
+    REDIS_URL="redis://default:d0ad4e6591f44ece9b5912faaa3c2c28@fly-dark-meadow-8508.upstash.io"
 
-######################################################################
+# Update gems and bundler
+RUN gem update --system --no-document && \
+    gem install -N bundler
 
-# This stage will be responsible for installing gems and npm packages
-FROM base AS dependencies
 
-# Install system dependencies required to build some Ruby gems (pg)
-RUN apk add --update build-base
-RUN mkdir /app
-WORKDIR /app
+# Throw-away build stage to reduce size of final image
+FROM base as build
 
-COPY .ruby-version Gemfile Gemfile.lock ./
+# Install packages needed to build gems and node modules
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential curl libpq-dev node-gyp pkg-config python-is-python3
 
-# Install gems
-ARG RAILS_ENV
-ENV RAILS_ENV="${RAILS_ENV}" \
-    NODE_ENV="development"
+# Install JavaScript dependencies
+ARG NODE_VERSION=18.18.0
+ARG YARN_VERSION=1.22.19
+ENV PATH=/usr/local/node/bin:$PATH
+RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+    npm install -g yarn@$YARN_VERSION && \
+    rm -rf /tmp/node-build-master
 
-# Install gems
-RUN bundle config set --local frozen 'true' \
-    && bundle install --no-cache --jobs "$(nproc)" --retry "$(nproc)" \
-    && rm -rf /usr/local/bundle/config \
-    && rm -rf /usr/local/bundle/cache/*.gem \
-    && find /usr/local/bundle/gems/ -name "*.c" -delete \
-    && find /usr/local/bundle/gems/ -name "*.o" -delete
+# Install application gems
+COPY --link Gemfile Gemfile.lock ./
+RUN bundle install && \
+    bundle exec bootsnap precompile --gemfile && \
+    rm -rf ~/.bundle/ $BUNDLE_PATH/ruby/*/cache $BUNDLE_PATH/ruby/*/bundler/gems/*/.git 
 
-COPY package.json yarn.lock ./
-
-# Install npm packages
+# Install node modules
+COPY --link .yarnrc package.json yarn.lock ./
+COPY --link .yarn/releases/* .yarn/releases/
 RUN yarn install --frozen-lockfile
 
-COPY . ./
 
-RUN SECRET_KEY_BASE=irrelevant DEVISE_JWT_SECRET_KEY=irrelevant bundle exec rails assets:precompile
+# Copy application code
+COPY --link . .
 
-######################################################################
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+RUN bundle exec vite build
 
-# We're back at the base stage
-FROM base AS test
 
-WORKDIR /app
 
-COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
+# Final stage for app image
+FROM base
 
-COPY . ./
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl postgresql-client && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-######################################################################
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
 
-# We're back at the base stage
-FROM base AS app
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
 
-# Create a non-root user to run the app and own app-specific files
-RUN adduser -D app
+# Deployment options
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true"
 
-# Switch to this user
-USER app
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# We'll install the app in this directory
-WORKDIR /app
-
-# Copy over gems from the dependencies stage
-COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
-COPY --chown=app --from=dependencies /app/public/ /app/public/
-
-# Finally, copy over the code
-# This is where the .dockerignore file comes into play
-# Note that we have to use `--chown` here
-COPY --chown=app . ./
-
-# Launch the server
-CMD ["rails", "s"]
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
