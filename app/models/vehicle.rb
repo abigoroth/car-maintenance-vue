@@ -14,6 +14,6 @@
 #  updated_at   :datetime         not null
 #
 class Vehicle < ApplicationRecord
-    validates :make, presence: true
-    has_many :maintenance_schedules
+  validates :make, presence: true
+  has_many :maintenance_schedules, dependent: :destroy
 end

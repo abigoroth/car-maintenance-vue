@@ -1,7 +1,7 @@
 const Index = () => import('@/pages/panel/IndexPage.vue');
 const Contact = () => import('@/pages/panel/ContactPage.vue');
 const Vehicles = () => import('@/pages/panel/VehiclesPage.vue');
-const VehicleShow = () => import('@/pages/panel/VehicleShowPage.vue');
+const MaintenanceSchedules = () => import('@/pages/panel/MaintenanceSchedulesPage.vue');
 const MaintenanceScheduleNew = () => import('@/pages/panel/MaintenanceScheduleNewPage.vue');
 const VehiclesNew = () => import('@/pages/panel/VehiclesNewPage.vue');
 
@@ -28,14 +28,14 @@ const routes = [
     },
   },
   {
-    path: '/vehicles/:id',
-    name: 'vehicleShow',
+    path: '/vehicles/:vehicle_id',
+    name: 'maintenanceSchedules',
     components: {
-      default: VehicleShow,
+      default: MaintenanceSchedules,
     },
   },
   {
-    path: '/vehicles/:id/maintenance_schedules/new',
+    path: '/vehicles/:vehicle_id/maintenance_schedules/new',
     name: 'maintenanceScheduleNew',
     components: {
       default: MaintenanceScheduleNew,

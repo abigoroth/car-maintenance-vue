@@ -18,7 +18,8 @@
         margin-bottom: 10px;
       }
 
-      input {
+      input,
+      select {
         font-size: 16px;
         line-height: 28px;
         width: 100%;
@@ -59,4 +60,13 @@
       font-size: 14px;
     }
   }
+}
+.list-item {
+  color: #1a1d20;
+  text-align: center;
+}
+.delete-item {
+  top: 10px;
+  right: 10px;
+  position: absolute;
 }

@@ -32,8 +32,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_26_171030) do
     t.string "note"
     t.integer "target_mileage"
     t.integer "workshop_id"
+    t.bigint "vehicle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["vehicle_id"], name: "index_maintenance_schedules_on_vehicle_id"
   end
 
   create_table "parts", force: :cascade do |t|
