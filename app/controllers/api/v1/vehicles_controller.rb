@@ -9,6 +9,12 @@ module Api::V1
       end
     end
 
+    def destroy
+      @vehicle = Vehicle.find(params[:id])
+      @vehicle.destroy
+      head :ok
+    end
+
     def index
       render json: Vehicle.all
     end
