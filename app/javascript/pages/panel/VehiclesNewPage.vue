@@ -42,37 +42,29 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { showToast } from '@/utils/showToast';
 
 const router = useRouter();
 
-type Vehicle = {
-  make: string;
-  model: string;
-  year: number | null;
-  plate_number: string;
-  vin_number: string;
-  mileage: number;
-};
-const vehicle: Vehicle = {
+const vehicle = {
   make: '',
   model: '',
-  year: null,
+  year: '',
   vin_number: '',
-  mileage: 0,
+  mileage: '',
   plate_number: '',
 };
 const submit = () => {
   const formData = new FormData();
   formData.append('make', vehicle.make);
   formData.append('model', vehicle.model);
-  formData.append('year', vehicle.year.toString());
+  formData.append('year', vehicle.year);
   formData.append('vin_number', vehicle.vin_number);
   formData.append('plate_number', vehicle.plate_number);
-  formData.append('mileage', vehicle.mileage.toString());
+  formData.append('mileage', vehicle.mileage);
 
   axios
     .post('/api/v1/vehicles', formData, {})

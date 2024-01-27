@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import routes from '@/routes/panel';
+import routes from '@/routes/maintenance';
 
 const router = createRouter({
   history: createWebHistory('/panel/'),
