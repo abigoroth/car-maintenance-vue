@@ -292,3 +292,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [ ] automat deploy process using capistrano
 - [ ] Add cypress (e2e testing)
+
+fly ssh console
+psql -h car-maintenance-db.flycast -U car_maintenance
+DATABASE_URL=postgres://car_maintenance:WS44Lp2rPt1o5CX@car-maintenance-db.flycast:5432/car_maintenance?sslmode=disable
+
+## Administrate
+
+`rails generate administrate:dashboard Administrator`

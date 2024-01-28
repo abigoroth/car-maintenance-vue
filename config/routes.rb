@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  devise_for :administrators
+  namespace :admin do
+      resources :allowlisted_jwts
+      resources :maintenance_schedules
+      resources :parts
+      resources :service_reminders
+      resources :users
+      resources :vehicles
+      resources :workshops
+      resources :administrators
+
+      root to: "allowlisted_jwts#index"
+    end
   devise_for :users, defaults: { format: :json }, skip: :all
   namespace :api do
     namespace :v1 do
