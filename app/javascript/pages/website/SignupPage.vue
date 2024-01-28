@@ -7,7 +7,12 @@
         <form @submit.prevent="submit">
           <div class="field pb-25">
             <label for="email">Email</label>
-            <input v-model="user.email" type="email" />
+            <input v-model="user.email" type="email" name="email" />
+          </div>
+
+          <div class="field pb-25">
+            <label for="phone">Phone</label>
+            <input v-model="user.phone" type="text" name="phone" />
           </div>
 
           <div class="field pb-25">
@@ -50,6 +55,7 @@ const user = reactive<IRegisterUser>({
   email: '',
   password: '',
   password_confirmation: '',
+  phone: '',
 });
 
 const submit = () => {

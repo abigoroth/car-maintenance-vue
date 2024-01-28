@@ -5,6 +5,7 @@ export interface IUserLogin {
 
 export interface IRegisterUser extends IUserLogin {
   password_confirmation: string;
+  phone: string;
 }
 
 export interface ICurrentUser {

@@ -1,7 +1,7 @@
 module Api::V1
   class VehiclesController < ApiController
     def create
-      vehicle = Vehicle.new(vehicle_params)
+      vehicle = current_user.vehicles.new(vehicle_params)
       if vehicle.save
         render json: vehicle
       else
@@ -16,7 +16,7 @@ module Api::V1
     end
 
     def index
-      render json: Vehicle.all
+      render json: current_user.vehicles
     end
 
     def show

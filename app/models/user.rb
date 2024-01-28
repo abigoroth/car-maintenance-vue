@@ -16,6 +16,7 @@
 #  last_sign_in_ip        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  phone                  :string
 #
 # Indexes
 #
@@ -28,4 +29,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self
+
+  has_many :vehicles
 end
