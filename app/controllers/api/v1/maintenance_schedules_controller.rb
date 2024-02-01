@@ -1,5 +1,6 @@
 module Api::V1
   class MaintenanceSchedulesController < ApiController
+    before_action :set_maintenance_schedule, only: %i[send_whatsapp_notification destroy]
     def index
       render json: vehicle.maintenance_schedules.with_part.to_json(include: :part)
     end
@@ -17,9 +18,12 @@ module Api::V1
     end
 
     def destroy
-      maintenance_schedule = MaintenanceSchedule.find(params[:id])
-      maintenance_schedule.destroy
+      @maintenance_schedule.destroy
       head :ok
+    end
+
+    def set_maintenance_schedule
+      @maintenance_schedule = MaintenanceSchedule.find(params[:id])
     end
 
     def maintenance_schedule_params

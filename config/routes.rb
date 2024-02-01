@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :administrators
   namespace :admin do
       resources :allowlisted_jwts
-      resources :maintenance_schedules
+      resources :maintenance_schedules do
+        get :send_whatsapp_reminder
+      end
       resources :parts
       resources :service_reminders
       resources :users
