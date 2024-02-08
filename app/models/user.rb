@@ -31,4 +31,5 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :vehicles
+  has_many :maintenance_schedules
 end

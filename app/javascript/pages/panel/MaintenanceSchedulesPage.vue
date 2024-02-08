@@ -30,54 +30,21 @@
       Add History
     </router-link>
   </div>
-  <!-- Maintenance filter -->
-  <div class="row">
-    <div class="col-6 pr-0">
-      <div
-        class="btn btn-sm btn-primary d-flex"
-        :class="{ active: !showHistory }"
-        @click="fetchMaintenance(false)"
-      >
-        Upcoming
-      </div>
-    </div>
-    <div class="col-6 pl-0">
-      <div
-        class="btn btn-sm btn-primary d-flex"
-        :class="{ active: showHistory }"
-        @click="fetchMaintenance(true)"
-      >
-        History
-      </div>
-    </div>
-  </div>
-  <!-- Maintenance filter END -->
-
-  <div
-    v-for="maintenance_schedule in maintenance_schedules"
-    :key="maintenance_schedule.id"
-    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative"
-  >
-    <h3 class="font-bold inline-block">{{ maintenance_schedule.part.name }}</h3>
-    <span class="text-sm ml-2">
-      {{ maintenance_schedule.date }} | {{ maintenance_schedule.target_mileage }}
-    </span>
-    <span
-      class="material-symbols-outlined delete-item"
-      @click="del(vehicle.id, maintenance_schedule.id)"
-      >delete</span
-    >
-  </div>
+  <MaintenanceScheduleFilter :show-history="showHistory" :fetch-maintenance="fetchMaintenance" />
+  <MaintenanceScheduleList :maintenance_schedules="maintenance_schedules" />
 </template>
 
 <script>
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { showToast } from '@/utils/showToast';
+import MaintenanceScheduleList from '@/pages/panel/MaintenanceScheduleList.vue';
+import MaintenanceScheduleFilter from '@/pages/panel/MaintenanceScheduleFilter.vue';
 const route = useRoute();
 
 export default {
   name: 'App',
+  components: { MaintenanceScheduleFilter, MaintenanceScheduleList },
   data() {
     return {
       vehicle: {},
@@ -115,7 +82,7 @@ export default {
       this.showHistory = showHistory;
       const params = new URLSearchParams({ show_history: this.showHistory });
       const maintenance_result = await axios.get(
-        '/api/v1/vehicles/' + this.vehicleId + '/maintenance_schedules',
+        '/api/v1/vehicles/' + this.vehicleId + '/maintenance_schedules.json',
         { params: params },
       );
       this.maintenance_schedules = maintenance_result.data;

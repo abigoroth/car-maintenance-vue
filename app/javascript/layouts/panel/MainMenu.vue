@@ -2,7 +2,7 @@
   <footer>
     <nav class="mobile-nav">
       <router-link :to="{ name: 'index' }" class="bloc-icon" :class="isActive('')">
-        Upcoming
+        Maintenance
         <span class="material-symbols-outlined"> handyman </span>
       </router-link>
       <router-link :to="{ name: 'vehicles' }" class="bloc-icon" :class="isActive('vehicles')">

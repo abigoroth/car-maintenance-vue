@@ -12,6 +12,7 @@
 #  vehicle_id     :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  user_id        :integer
 #
 # Indexes
 #
@@ -20,6 +21,7 @@
 class MaintenanceSchedule < ApplicationRecord
   belongs_to :vehicle
   belongs_to :part
+  belongs_to :user
 
   scope :with_part, -> { includes(:part) }
   scope :history, lambda { |show_history|
