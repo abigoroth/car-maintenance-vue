@@ -35,7 +35,7 @@ const routes = [
     },
   },
   {
-    path: '/vehicles/:vehicle_id/maintenance_schedules/new',
+    path: '/vehicles/:vehicle_id/maintenance_schedules/new/:status',
     name: 'maintenanceScheduleNew',
     components: {
       default: MaintenanceScheduleNew,

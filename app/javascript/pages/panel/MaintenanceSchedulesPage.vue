@@ -1,6 +1,58 @@
 <template>
-  <h2 class="text-center">{{ vehicle.plate_number }}</h2>
-  <h5>Maintenance schedule</h5>
+  <div class="header mt-2 position-relative">
+    <router-link
+      :to="{ name: 'vehicles' }"
+      style="left: 0"
+      class="item btn btn-sm btn-primary position-absolute font-weight-bold"
+    >
+      Back
+    </router-link>
+    <div
+      class="item btn btn-sm btn-primary position-absolute right"
+      style="right: 0"
+      @click="showAdd = !showAdd"
+    >
+      Add
+    </div>
+    <h2 class="text-center">{{ vehicle.plate_number }}</h2>
+  </div>
+  <div v-if="showAdd">
+    <router-link
+      :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }"
+      class="btn btn-primary btn-sm d-flex mb-2 text-center"
+    >
+      Add Maintenance
+    </router-link>
+    <router-link
+      :to="{ name: 'maintenanceScheduleNew', params: { status: 'completed' } }"
+      class="btn btn-primary btn-sm d-flex mb-2 text-center"
+    >
+      Add History
+    </router-link>
+  </div>
+  <!-- Maintenance filter -->
+  <div class="row">
+    <div class="col-6 pr-0">
+      <div
+        class="btn btn-sm btn-primary d-flex"
+        :class="{ active: !showHistory }"
+        @click="fetchMaintenance(false)"
+      >
+        Upcoming
+      </div>
+    </div>
+    <div class="col-6 pl-0">
+      <div
+        class="btn btn-sm btn-primary d-flex"
+        :class="{ active: showHistory }"
+        @click="fetchMaintenance(true)"
+      >
+        History
+      </div>
+    </div>
+  </div>
+  <!-- Maintenance filter END -->
+
   <div
     v-for="maintenance_schedule in maintenance_schedules"
     :key="maintenance_schedule.id"
@@ -16,22 +68,6 @@
       >delete</span
     >
   </div>
-  <div
-    class="item btn btn-primary position-absolute top-0"
-    style="left: 10px"
-    @click="$router.go(-1)"
-  >
-    Back
-  </div>
-  <div class="mb-60"></div>
-
-  <router-link
-    :to="{ name: 'maintenanceScheduleNew' }"
-    class="item btn btn-primary position-absolute top-0"
-    style="right: 10px"
-  >
-    Add
-  </router-link>
 </template>
 
 <script>
@@ -47,6 +83,9 @@ export default {
       vehicle: {},
       maintenance_schedules: [],
       parts: [],
+      showAdd: false,
+      showHistory: false,
+      vehicleId: this.$router.currentRoute.value.params.vehicle_id,
     };
   },
   async mounted() {
@@ -67,13 +106,18 @@ export default {
       }
     },
     async fetchData() {
-      const id = this.$router.currentRoute.value.params.vehicle_id;
-      const result = await axios.get('/api/v1/vehicles/' + id);
-      const maintenance_result = await axios.get(
-        '/api/v1/vehicles/' + id + '/maintenance_schedules',
-      );
+      const result = await axios.get('/api/v1/vehicles/' + this.vehicleId);
+      this.fetchMaintenance(this.showHistory);
 
       this.vehicle = result.data;
+    },
+    async fetchMaintenance(showHistory) {
+      this.showHistory = showHistory;
+      const params = new URLSearchParams({ show_history: this.showHistory });
+      const maintenance_result = await axios.get(
+        '/api/v1/vehicles/' + this.vehicleId + '/maintenance_schedules',
+        { params: params },
+      );
       this.maintenance_schedules = maintenance_result.data;
     },
   },

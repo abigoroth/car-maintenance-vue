@@ -63,6 +63,9 @@ export default {
   async mounted() {
     const part_result = await axios.get('/api/v1/parts/');
     this.parts = part_result.data;
+    const status = this.$router.currentRoute.value.params.status;
+    console.log(status);
+    this.maintenance_schedule.status = status;
   },
   methods: {
     submit() {

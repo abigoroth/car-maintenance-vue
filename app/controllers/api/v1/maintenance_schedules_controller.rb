@@ -2,7 +2,7 @@ module Api::V1
   class MaintenanceSchedulesController < ApiController
     before_action :set_maintenance_schedule, only: %i[send_whatsapp_notification destroy]
     def index
-      render json: vehicle.maintenance_schedules.with_part.to_json(include: :part)
+      render json: vehicle.maintenance_schedules.with_part.history(params[:show_history]).to_json(include: :part)
     end
     def create
       maintenance_schedule = MaintenanceSchedule.new(maintenance_schedule_params)

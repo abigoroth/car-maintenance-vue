@@ -1,7 +1,7 @@
 <template>
   <BaseLayout>
     <div class="wrapper">
-      <div class="section">
+      <div class="section bg-white">
         <div class="container">
           <router-view />
         </div>

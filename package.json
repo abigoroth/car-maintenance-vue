@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/types": "^7.21.5",
     "axios": "^1.4.0",
+    "bootstrap-vue": "^2.23.1",
     "pinia": "^2.0.36",
     "vue": "^3.2.47",
     "vue-query": "^1.26.0",

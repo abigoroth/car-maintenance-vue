@@ -1,5 +1,14 @@
 <template>
-  <h2 class="text-center">Your Vehicles</h2>
+  <div class="header mt-2 bg-white">
+    <h2 class="text-center">Your Vehicles</h2>
+    <router-link
+      :to="{ name: 'vehiclesNew' }"
+      class="item btn btn-sm btn-primary position-absolute"
+      style="right: 10px; top: 10px"
+    >
+      Add
+    </router-link>
+  </div>
   <div
     v-for="vehicle in vehicles"
     :key="vehicle.id"
@@ -16,14 +25,6 @@
     <div class="material-symbols-outlined delete-item" @click="del(vehicle.id)">delete</div>
   </div>
   <div class="mb-60"></div>
-
-  <router-link
-    :to="{ name: 'vehiclesNew' }"
-    class="item btn btn-primary position-absolute top-0"
-    style="right: 10px"
-  >
-    Add
-  </router-link>
 </template>
 
 <script>
