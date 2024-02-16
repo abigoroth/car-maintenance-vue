@@ -27,6 +27,8 @@ class MaintenanceSchedule < ApplicationRecord
   scope :history, lambda { |show_history|
     (show_history == 'true' ? where(status: :completed) : where.not(status: :completed))
   }
+  scope :need_notify, -> { where(status: [:created, :overdue]) }
+  # overdue is when it passes the date but its on snooze
   enum :status, { completed: 0, created: 1, overdue: 2, delayed: 3 }, _prefix: :ms
 
   def date

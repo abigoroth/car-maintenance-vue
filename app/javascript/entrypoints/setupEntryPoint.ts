@@ -1,6 +1,7 @@
 import { Component, createApp } from 'vue';
 import { Router } from 'vue-router';
 import { VueQueryPlugin } from 'vue-query';
+import OneSignalVuePlugin from '@onesignal/onesignal-vue3';
 import { globalProperties } from './globalProperties';
 import { pinia } from '@/stores';
 import { setHTTPHeader } from '@/services/http.service';
@@ -18,6 +19,10 @@ export const setupEntryPoint = (rootComponent: Component, router: Router) => {
   app.use(router);
   app.use(pinia);
   app.use(VueQueryPlugin);
+  // app.use(OneSignalVuePlugin, {
+  //   appId: 'df76982b-a7a9-4ebb-8a79-7d9b722f8d95',
+  // });
+
   app.config.globalProperties = { ...app.config.globalProperties, ...globalProperties };
 
   app.mount('#app');

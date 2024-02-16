@@ -2,7 +2,7 @@
   <footer>
     <nav class="mobile-nav">
       <router-link :to="{ name: 'index' }" class="bloc-icon" :class="isActive('')">
-        Maintenance
+        Upcoming
         <span class="material-symbols-outlined"> handyman </span>
       </router-link>
       <router-link :to="{ name: 'vehicles' }" class="bloc-icon" :class="isActive('vehicles')">
@@ -11,7 +11,7 @@
       </router-link>
 
       <router-link :to="{ name: 'contact' }" class="bloc-icon" :class="isActive('contact')">
-        Contact
+        Utility
         <span class="material-symbols-outlined"> contact_support </span>
       </router-link>
     </nav>

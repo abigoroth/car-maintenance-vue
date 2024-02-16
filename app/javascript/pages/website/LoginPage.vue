@@ -77,7 +77,8 @@ onMounted(() => {
 const submit = () => {
   authStore
     .login(user)
-    .then(() => {
+    .then((result) => {
+      localStorage.setItem('userId', result.data.id);
       redirectToPanel();
     })
     .catch((error) => {

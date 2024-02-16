@@ -13,11 +13,16 @@
       @click="del(vehicle.id, maintenance_schedule.id)"
       >delete</span
     >
+    <span
+      class="material-symbols-outlined test-notification"
+      @click="sendNotification(vehicle.id, maintenance_schedule.id)"
+      >notifications_active</span
+    >
   </div>
 </template>
 <script>
 export default {
   name: 'App',
-  props: ['maintenance_schedules', 'vehicle', 'del'],
+  props: ['maintenance_schedules', 'vehicle', 'del', 'sendNotification'],
 };
 </script>

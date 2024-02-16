@@ -12,5 +12,27 @@
 
 <body id="app">
 </body>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  localStorage.setItem('os_app_id', "df76982b-a7a9-4ebb-8a79-7d9b722f8d95");
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(function(OneSignal) {
+    OneSignal.init({
+      appId: "df76982b-a7a9-4ebb-8a79-7d9b722f8d95",
+    });
+    OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
+  });
 
+  function pushSubscriptionChangeListener(event) {
+    console.log("pushSubscriptionChangeListener triggered!")
+    console.log(event)
+    console.log("^^^^^^^^EVENT PRINTED^^^^^^^^")
+
+    if (event.current.token) {
+      console.log(`The push subscription has received a token!`);
+      console.log(event.current)
+      localStorage.setItem('os_sub_id', event.current.id);
+    }
+  }
+</script>
 </html>

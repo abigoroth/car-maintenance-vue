@@ -31,7 +31,12 @@
     </router-link>
   </div>
   <MaintenanceScheduleFilter :show-history="showHistory" :fetch-maintenance="fetchMaintenance" />
-  <MaintenanceScheduleList :maintenance_schedules="maintenance_schedules" />
+  <MaintenanceScheduleList
+    :maintenance_schedules="maintenance_schedules"
+    :vehicle="vehicle"
+    :send-notification="sendNotification"
+    :del="del"
+  />
 </template>
 
 <script>
@@ -63,6 +68,25 @@ export default {
       if (confirm('Do you really want to delete?')) {
         axios
           .delete('/api/v1/vehicles/' + vehicle_id + '/maintenance_schedules/' + id)
+          .then((resp) => {
+            showToast('Maintenance Schedule Deleted');
+            this.fetchData();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    sendNotification(vehicle_id, id) {
+      if (confirm('Test notification?')) {
+        axios
+          .get(
+            '/api/v1/vehicles/' +
+              vehicle_id +
+              '/maintenance_schedules/' +
+              id +
+              '/send_notification',
+          )
           .then((resp) => {
             showToast('Maintenance Schedule Deleted');
             this.fetchData();

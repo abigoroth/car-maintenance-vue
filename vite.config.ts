@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import RubyPlugin from 'vite-plugin-ruby';
 import vue from '@vitejs/plugin-vue';
-const path = require('path')
+import { VitePWA } from 'vite-plugin-pwa';
+const path = require('path');
 
 export default defineConfig({
   resolve: {
@@ -10,7 +11,11 @@ export default defineConfig({
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     }
   },
-  plugins: [vue(), RubyPlugin()],
+  plugins: [
+    vue(),
+    VitePWA({ registerType: 'autoUpdate' }),
+    RubyPlugin()
+  ],
   css: {
     preprocessorOptions: {
       scss: {

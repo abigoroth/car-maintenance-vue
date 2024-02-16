@@ -20,9 +20,12 @@ Rails.application.routes.draw do
       resources :maintenance_schedules
       resources :vehicles do
         scope module: :vehicles do
-          resources :maintenance_schedules
+          resources :maintenance_schedules do
+            get :send_notification
+          end
         end
       end
+      resources :users
       resources :parts
     end
   end

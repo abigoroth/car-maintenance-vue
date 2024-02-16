@@ -17,6 +17,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  phone                  :string
+#  os_id                  :string
 #
 # Indexes
 #
