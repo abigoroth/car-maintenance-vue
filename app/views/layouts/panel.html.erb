@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>BaseApp | Panel</title>
+  <title>Sevoti</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <%= csp_meta_tag %>
   <%= vite_client_tag %>
@@ -12,18 +12,22 @@
 
 <body id="app">
 </body>
+<div class='onesignal-customlink-container'></div>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-  localStorage.setItem('os_app_id', "df76982b-a7a9-4ebb-8a79-7d9b722f8d95");
+  const os_app_id = "fa7fecdd-07eb-42c7-845c-48798f1b332d";
+  const userId = localStorage.getItem('userId');
+  localStorage.setItem('os_app_id', os_app_id);
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(function(OneSignal) {
     OneSignal.init({
-      appId: "df76982b-a7a9-4ebb-8a79-7d9b722f8d95",
+      appId: os_app_id,
     });
     OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
   });
 
-  function pushSubscriptionChangeListener(event) {
+  async function pushSubscriptionChangeListener(event) {
     console.log("pushSubscriptionChangeListener triggered!")
     console.log(event)
     console.log("^^^^^^^^EVENT PRINTED^^^^^^^^")
@@ -31,7 +35,34 @@
     if (event.current.token) {
       console.log(`The push subscription has received a token!`);
       console.log(event.current)
-      localStorage.setItem('os_sub_id', event.current.id);
+      const os_sub_id = event.current.id;
+      localStorage.setItem('os_sub_id', os_sub_id);
+      const idRequest = await axios.get(
+        'https://api.onesignal.com/apps/' +
+        os_app_id +
+        '/subscriptions/' +
+        os_sub_id +
+        '/user/identity',
+      );
+      const os_id = idRequest.data.identity.onesignal_id;
+      localStorage.setItem('os_id', os_id);
+
+      //update external id to OS
+      OneSignal.login(userId);
+
+      // update subscription id to backend
+      const formData = new FormData();
+      formData.append('os_id', os_id);
+      axios
+        .put('/api/v1/users/' + userId, formData, {})
+        .then(() => {
+          console.log("Saved os_id to backend");
+          // showToast('OS id stored', 'success');
+        })
+        .catch((error) => {
+          console.log(error);
+          // showToast(error.response.data.errors[0], 'error');
+        });
     }
   }
 </script>

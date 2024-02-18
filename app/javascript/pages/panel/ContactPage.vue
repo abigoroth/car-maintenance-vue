@@ -17,6 +17,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { createRouter as OneSignal } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { showToast } from '@/utils/showToast';
 const authStore = useAuthStore();
@@ -46,30 +47,23 @@ export default {
       const os_sub_id = localStorage.getItem('os_sub_id');
       const os_app_id = localStorage.getItem('os_app_id');
       const userId = localStorage.getItem('userId');
-      const id = await axios.get(
-        'https://api.onesignal.com/apps/' +
-          os_app_id +
-          '/subscriptions/' +
-          os_sub_id +
-          '/user/identity',
-      );
-      const os_id = id.data.identity.onesignal_id;
+      const os_id = localStorage.getItem('os_id');
       console.log(id);
       localStorage.setItem('os_id', os_id);
       console.log(authStore);
-      const formData = new FormData();
-      formData.append('os_id', os_id);
-      axios
-        .put('/api/v1/users/' + userId, formData, {})
-        .then(() => {
-          showToast('OS id stored', 'success');
-        })
-        .catch((error) => {
-          console.log(error);
-          showToast(error.response.data.errors[0], 'error');
-        });
-      //   store os_id in backend
-      //   update external id into onesignal
+
+      // might not be using createOsUser. To be deleted.
+      // const createOsUser = await axios.post(
+      //   'https://api.onesignal.com/apps/' +
+      //   os_app_id +
+      //   '/users',
+      //   { identity: { external_id: userId, onesignal_id: os_id } })
+      //   .then((result) => {
+      //     console.log(result);
+      //   });
+
+      // delete
+      // await axios.delete('https://api.onesignal.com/apps/' + os_app_id + '/users/by/external_id/1');
       // send notification hapily.. :P
       // https://documentation.onesignal.com/reference/create-alias-by-subscription
     },

@@ -3,9 +3,9 @@
 class NotificationJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    if args[:maintenance_schedule]
-      maintenance_schedule = MaintenanceSchedule.find(args[:maintenance_schedule])
+  def perform(maintenance_schedule_id: nil)
+    if maintenance_schedule_id.present?
+      maintenance_schedule = MaintenanceSchedule.find(maintenance_schedule_id)
       notify_owner(maintenance_schedule)
     else
       # query for today notification and send it
@@ -18,17 +18,16 @@ class NotificationJob < ApplicationJob
   def notify_owner(maintenance_schedule)
     return unless maintenance_schedule.user.os_id
 
-    api_instance = OneSignal::DefaultApi.new
-    notification = OneSignal::Notification.new({app_id: 'df76982b-a7a9-4ebb-8a79-7d9b722f8d95'})
-    notification.contents = OneSignal::StringMap.new({ en: 'hello'})
-    notification.included_segments = [maintenance_schedule.user.os_id]
-
-    begin
-      # Create notification
-      result = api_instance.create_notification(notification)
-      p result
-    rescue OneSignal::ApiError => e
-      puts "Error when calling DefaultApi->create_notification: #{e}"
-    end
+    HTTParty.post('https://onesignal.com/api/v1/notifications', body: {
+      'app_id': 'fa7fecdd-07eb-42c7-845c-48798f1b332d',
+      'include_aliases': {
+        'external_id': ["#{maintenance_schedule.user_id}"]
+      },
+      "target_channel": "push",
+      "contents": {"en": "test push from job"}
+    }.to_json, headers: {
+      'Content-Type' => 'application/json',
+      'Authorization' => "Basic #{OneSignal.configure.app_key}"
+    })
   end
 end

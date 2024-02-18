@@ -75,10 +75,13 @@ onMounted(() => {
 });
 
 const submit = () => {
+  const os_id = localStorage.getItem('os_id');
+  const os_app_id = localStorage.getItem('os_app_id');
   authStore
     .login(user)
     .then((result) => {
-      localStorage.setItem('userId', result.data.id);
+      const userId = result.data.id;
+      localStorage.setItem('userId', userId);
       redirectToPanel();
     })
     .catch((error) => {

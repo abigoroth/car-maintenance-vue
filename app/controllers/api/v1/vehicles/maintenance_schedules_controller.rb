@@ -18,7 +18,7 @@ module Api
         end
 
         def send_notification
-          NotificationJob.perform_later(maintenance_schedule: @maintenance_schedule)
+          NotificationJob.perform_later(maintenance_schedule_id: @maintenance_schedule.id)
         end
 
         def vehicle
