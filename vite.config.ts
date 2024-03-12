@@ -5,7 +5,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 const path = require('path');
 
 export default defineConfig({
+  optimizeDeps: { exclude: ['@malaysian-cars'] },
   resolve: {
+    preserveSymlinks: true,
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     alias: {
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),

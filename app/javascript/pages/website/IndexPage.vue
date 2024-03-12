@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-center">Welcome to SERVOTI</h2>
+  <h2 class="text-center">Welcome to SEVOTI</h2>
   <h4 class="text-center">Service on time</h4>
   <div>
     <img :src="imgUrl" class="w-100" alt="" />

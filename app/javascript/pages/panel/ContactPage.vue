@@ -3,7 +3,7 @@
   <ul class="navbar-nav">
     <li class="nav-item">
       <a
-        href="https://wa.me/60172931521?text=Servoti+Help"
+        href="https://wa.me/60172931521?text=Sevoti+Help"
         target="_blank"
         class="btn btn-primary d-flex"
       >
