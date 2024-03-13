@@ -17,17 +17,31 @@
             <input v-model="maintenance_schedule.date" type="date" />
           </div>
           <div class="field pb-25">
-            <label for="mileage">Target Mileage</label>
-            <input v-model="maintenance_schedule.target_mileage" type="number" />
-          </div>
-          <div class="field pb-25">
-            <label for="mileage">Note</label>
-            <input v-model="maintenance_schedule.note" type="text" />
+            <label for="mileage">{{
+              maintenance_schedule.status === 'completed' ? 'Mileage' : 'Target Mileage'
+            }}</label>
+            <input v-model="maintenance_schedule.mileage" type="number" />
           </div>
 
-          <div class="field pb-25">
-            <label for="vin_number">Workshop</label>
-            <input v-model="maintenance_schedule.workshop_id" />
+          <a href="#" @click="toggleAdvance">{{ advance ? 'Show less' : 'Show advance' }}</a>
+
+          <div v-if="advance">
+            <div class="field pb-25">
+              <label for="vin_number">{{
+                maintenance_schedule.status === 'completed' ? 'Price' : 'Target Price'
+              }}</label>
+              <input v-model="maintenance_schedule.price" type="number" />
+            </div>
+
+            <div class="field pb-25">
+              <label for="mileage">Note</label>
+              <input v-model="maintenance_schedule.note" type="text" />
+            </div>
+
+            <div class="field pb-25">
+              <label for="vin_number">Workshop</label>
+              <input v-model="maintenance_schedule.workshop_id" />
+            </div>
           </div>
 
           <div class="field pb-25">
@@ -49,12 +63,14 @@ export default {
   name: 'App',
   data() {
     return {
+      advance: false,
       maintenance_schedule: {
         part_id: '',
         date: '',
         status: '',
         note: '',
-        target_mileage: '',
+        mileage: '',
+        price: '',
         workshop_id: '',
       },
       parts: [],
@@ -68,6 +84,10 @@ export default {
     this.maintenance_schedule.status = status;
   },
   methods: {
+    toggleAdvance(e) {
+      this.advance = !this.advance;
+      e.preventDefault();
+    },
     submit() {
       const vehicleId = this.$router.currentRoute.value.params.vehicle_id;
       const formData = new FormData();
@@ -76,7 +96,8 @@ export default {
       formData.append('date', this.maintenance_schedule.date);
       formData.append('status', this.maintenance_schedule.status);
       formData.append('note', this.maintenance_schedule.note);
-      formData.append('target_mileage', this.maintenance_schedule.target_mileage);
+      formData.append('mileage', this.maintenance_schedule.mileage);
+      formData.append('price', this.maintenance_schedule.price);
       formData.append('workshop_id', this.maintenance_schedule.workshop_id);
       axios
         .post('/api/v1/vehicles/' + vehicleId + '/maintenance_schedules', formData, {})

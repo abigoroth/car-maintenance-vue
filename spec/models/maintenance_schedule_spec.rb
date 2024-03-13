@@ -2,17 +2,18 @@
 #
 # Table name: maintenance_schedules
 #
-#  id             :bigint           not null, primary key
-#  part_id        :integer
-#  date           :datetime
-#  status         :integer
-#  note           :string
-#  target_mileage :integer
-#  workshop_id    :integer
-#  vehicle_id     :bigint
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  user_id        :integer
+#  id          :bigint           not null, primary key
+#  part_id     :integer
+#  date        :datetime
+#  status      :integer
+#  note        :string
+#  mileage     :integer
+#  workshop_id :integer
+#  vehicle_id  :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :integer
+#  price       :integer          default(0)
 #
 # Indexes
 #

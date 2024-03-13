@@ -3983,6 +3983,11 @@ magic-string@^0.30.6:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
+malaysian-cars@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/malaysian-cars/-/malaysian-cars-1.0.4.tgz#c93714c79bde8e88f2bf2c9da9c7777f83fb1d70"
+  integrity sha512-Wos/aNRMFdS2zKv0GvA/dP97h9Qw2CavpOuxgpP8pwjUlFWy38YHSNGC9QFM4Y6w/SqaozqOCsRmkoCTfsqiUg==
+
 match-sorter@^6.0.2, match-sorter@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-6.3.1.tgz#98cc37fda756093424ddf3cbc62bfe9c75b92bda"

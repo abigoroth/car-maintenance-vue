@@ -40,7 +40,7 @@
             <input v-model="vehicle.plate_number" type="text" />
           </div>
 
-          <a href="#" @click="toggleAdvance">{{ advanceText }}</a>
+          <a href="#" @click="toggleAdvance">{{ advance ? 'Show less' : 'Show advance' }}</a>
 
           <div v-if="advance">
             <div class="field pb-25">
@@ -95,7 +95,6 @@ export default {
   methods: {
     toggleAdvance(e) {
       this.advance = !this.advance;
-      this.advance ? (this.advanceText = 'Show less') : (this.advanceText = 'Show advance');
       e.preventDefault();
     },
     makeChange(event) {

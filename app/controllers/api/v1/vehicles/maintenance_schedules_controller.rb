@@ -26,17 +26,19 @@ module Api
         end
 
         def destroy
-          @maintenance_schedule.destroy
-          head :ok
+          if @maintenance_schedule.destroy
+            head :ok
+          else
+            render json: @maintenance_schedule.errors, status: :bad_request
+          end
         end
 
         def set_maintenance_schedule
           @maintenance_schedule = MaintenanceSchedule.find(params[:id] || params[:maintenance_schedule_id])
-          head :ok
         end
 
         def maintenance_schedule_params
-          params.permit(:part_id, :date, :status, :note, :target_mileage, :workshop_id, :vehicle_id)
+          params.permit(:part_id, :date, :status, :note, :mileage, :workshop_id, :vehicle_id)
         end
       end
     end

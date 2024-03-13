@@ -1,6 +1,6 @@
 <template>
   <div class="header mt-2 bg-white">
-    <h2 class="text-center">Your Vehicles</h2>
+    <h3 class="text-center">Your Vehicles</h3>
     <router-link
       :to="{ name: 'vehiclesNew' }"
       class="item btn btn-sm btn-primary position-absolute"

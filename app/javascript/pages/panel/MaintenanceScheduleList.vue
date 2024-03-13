@@ -6,7 +6,8 @@
   >
     <h3 class="font-bold inline-block">{{ maintenance_schedule.part.name }}</h3>
     <span class="text-sm ml-2">
-      {{ maintenance_schedule.date }} | {{ maintenance_schedule.target_mileage }}
+      {{ maintenance_schedule.date }}
+      {{ maintenance_schedule.mileage ? '- ' + maintenance_schedule.mileage + 'KM' : '' }}
     </span>
     <span
       class="material-symbols-outlined delete-item"
