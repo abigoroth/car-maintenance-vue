@@ -27,7 +27,6 @@
   <div id="myNav" class="overlay">
     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
     <div class="overlay-content">
-      <a href="#">About</a>
       <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }">
         Add Maintenance
       </router-link>
