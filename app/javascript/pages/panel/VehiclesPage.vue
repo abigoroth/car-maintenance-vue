@@ -12,7 +12,7 @@
   <div
     v-for="vehicle in vehicles"
     :key="vehicle.id"
-    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative"
+    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
   >
     <router-link
       :to="{ name: 'maintenanceSchedules', params: { vehicle_id: vehicle.id } }"

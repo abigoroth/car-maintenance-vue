@@ -4,7 +4,10 @@
     :key="maintenance_schedule.id"
     class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
   >
-    <h3 class="font-bold inline-block">{{ maintenance_schedule.part.name }}</h3>
+    <h3 class="font-bold inline-block">
+      {{ maintenance_schedule.part.name }}
+      {{ vehicleId == null ? maintenance_schedule.vehicle.plate_number : '' }}
+    </h3>
     <span class="text-sm ml-2">
       {{ maintenance_schedule.date }}
       {{ maintenance_schedule.mileage ? '- ' + maintenance_schedule.mileage + 'KM' : '' }}
@@ -24,6 +27,6 @@
 <script>
 export default {
   name: 'App',
-  props: ['maintenance_schedules', 'vehicle', 'del', 'sendNotification'],
+  props: ['maintenance_schedules', 'vehicle', 'del', 'sendNotification', 'vehicleId'],
 };
 </script>

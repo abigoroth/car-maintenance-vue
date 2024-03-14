@@ -10,25 +10,11 @@
     <div
       class="item btn btn-sm btn-primary position-absolute right"
       style="right: 0"
-      @click="showAdd = !showAdd"
+      @click="openNav"
     >
       Add
     </div>
     <h2 class="text-center">{{ vehicle.plate_number }}</h2>
-  </div>
-  <div v-if="showAdd">
-    <router-link
-      :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }"
-      class="btn btn-primary btn-sm d-flex mb-2 text-center"
-    >
-      Add Maintenance
-    </router-link>
-    <router-link
-      :to="{ name: 'maintenanceScheduleNew', params: { status: 'completed' } }"
-      class="btn btn-primary btn-sm d-flex mb-2 text-center"
-    >
-      Add History
-    </router-link>
   </div>
   <MaintenanceScheduleFilter :show-history="showHistory" :fetch-maintenance="fetchMaintenance" />
   <MaintenanceScheduleList
@@ -36,7 +22,20 @@
     :vehicle="vehicle"
     :send-notification="sendNotification"
     :del="del"
+    :vehicle-id="vehicleId"
   />
+  <div id="myNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
+    <div class="overlay-content">
+      <a href="#">About</a>
+      <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }">
+        Add Maintenance
+      </router-link>
+      <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'completed' } }">
+        Add History
+      </router-link>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -64,6 +63,12 @@ export default {
     await this.fetchData();
   },
   methods: {
+    openNav() {
+      document.getElementById('myNav').style.width = '100%';
+    },
+    closeNav() {
+      document.getElementById('myNav').style.width = '0%';
+    },
     del(vehicle_id, id) {
       if (confirm('Do you really want to delete?')) {
         axios

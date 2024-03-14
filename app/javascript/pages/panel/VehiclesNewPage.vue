@@ -61,7 +61,7 @@
 
           <div class="field pb-25">
             <input class="submit" type="submit" name="submit" value="Add" />
-            <button class="btn btn-secondary w-100 p-2 mt-2" @click="$router.go(-1)">Cancel</button>
+            <button class="btn btn-secondary w-100 p-2 mt-2" @click="routerBack">Cancel</button>
           </div>
         </form>
       </div>
@@ -93,6 +93,10 @@ export default {
     };
   },
   methods: {
+    routerBack(e) {
+      e.preventDefault();
+      this.$router.go(-1);
+    },
     toggleAdvance(e) {
       this.advance = !this.advance;
       e.preventDefault();

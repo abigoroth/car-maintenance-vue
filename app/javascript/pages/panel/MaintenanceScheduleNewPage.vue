@@ -15,6 +15,15 @@
           <div class="field pb-25">
             <label for="date">Date</label>
             <input v-model="maintenance_schedule.date" type="date" />
+            <a
+              v-for="month in months"
+              :key="month"
+              href="#"
+              class="btn btn-outline-dark btn-sm m-1"
+              @click="completed ? minusMonth(month) : addMonth(month)"
+            >
+              {{ completed ? '-' : '+' }}{{ month }} month
+            </a>
           </div>
           <div class="field pb-25">
             <label for="mileage">{{
@@ -27,9 +36,7 @@
 
           <div v-if="advance">
             <div class="field pb-25">
-              <label for="vin_number">{{
-                maintenance_schedule.status === 'completed' ? 'Price' : 'Target Price'
-              }}</label>
+              <label for="vin_number">{{ completed ? 'Price' : 'Target Price' }}</label>
               <input v-model="maintenance_schedule.price" type="number" />
             </div>
 
@@ -46,7 +53,7 @@
 
           <div class="field pb-25">
             <input class="submit" type="submit" name="submit" value="Add" />
-            <button class="btn btn-secondary w-100 p-2 mt-2" @click="$router.go(-1)">Cancel</button>
+            <button class="btn btn-secondary w-100 p-2 mt-2" @click="routerBack">Cancel</button>
           </div>
         </form>
       </div>
@@ -63,10 +70,12 @@ export default {
   name: 'App',
   data() {
     return {
+      months: ['1', '3', '6', '12', '24'],
+      completed: this.$router.currentRoute.value.params.status === 'completed',
       advance: false,
       maintenance_schedule: {
         part_id: '',
-        date: '',
+        date: new Date().toISOString().split('T')[0],
         status: '',
         note: '',
         mileage: '',
@@ -84,9 +93,27 @@ export default {
     this.maintenance_schedule.status = status;
   },
   methods: {
+    addMonth(month) {
+      this.maintenance_schedule.date = new Date(this.maintenance_schedule.date);
+      this.maintenance_schedule.date.setMonth(
+        this.maintenance_schedule.date.getMonth() + parseInt(month),
+      );
+      this.maintenance_schedule.date = this.maintenance_schedule.date.toISOString().split('T')[0];
+    },
+    minusMonth(month) {
+      this.maintenance_schedule.date = new Date(this.maintenance_schedule.date);
+      this.maintenance_schedule.date.setMonth(
+        this.maintenance_schedule.date.getMonth() - parseInt(month),
+      );
+      this.maintenance_schedule.date = this.maintenance_schedule.date.toISOString().split('T')[0];
+    },
     toggleAdvance(e) {
       this.advance = !this.advance;
       e.preventDefault();
+    },
+    routerBack(e) {
+      e.preventDefault();
+      this.$router.go(-1);
     },
     submit() {
       const vehicleId = this.$router.currentRoute.value.params.vehicle_id;
