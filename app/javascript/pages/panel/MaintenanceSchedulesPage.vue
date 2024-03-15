@@ -10,7 +10,7 @@
     <div
       class="item btn btn-sm btn-primary position-absolute right"
       style="right: 0"
-      @click="openNav"
+      @click="openNav('maintenanceNav')"
     >
       Add
     </div>
@@ -24,17 +24,7 @@
     :del="del"
     :vehicle-id="vehicleId"
   />
-  <div id="myNav" class="overlay">
-    <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-    <div class="overlay-content">
-      <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }">
-        Add Maintenance
-      </router-link>
-      <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'completed' } }">
-        Add History
-      </router-link>
-    </div>
-  </div>
+  <ActionOverlay ref="maintenanceNav" :close-nav="closeNav" :open-nav="openNav" />
 </template>
 
 <script>
@@ -43,11 +33,12 @@ import { useRoute } from 'vue-router';
 import { showToast } from '@/utils/showToast';
 import MaintenanceScheduleList from '@/pages/panel/MaintenanceScheduleList.vue';
 import MaintenanceScheduleFilter from '@/pages/panel/MaintenanceScheduleFilter.vue';
+import ActionOverlay from '@/pages/panel/util/ActionOverlay.vue';
 const route = useRoute();
 
 export default {
   name: 'App',
-  components: { MaintenanceScheduleFilter, MaintenanceScheduleList },
+  components: { MaintenanceScheduleFilter, MaintenanceScheduleList, ActionOverlay },
   data() {
     return {
       vehicle: {},
@@ -62,11 +53,11 @@ export default {
     await this.fetchData();
   },
   methods: {
-    openNav() {
-      document.getElementById('myNav').style.width = '100%';
+    openNav(id) {
+      this.$refs[id].$el.style.width = '100%';
     },
-    closeNav() {
-      document.getElementById('myNav').style.width = '0%';
+    closeNav(id) {
+      this.$refs[id].$el.style.width = '0%';
     },
     del(vehicle_id, id) {
       if (confirm('Do you really want to delete?')) {
