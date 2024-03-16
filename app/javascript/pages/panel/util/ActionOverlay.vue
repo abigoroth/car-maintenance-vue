@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <a href="javascript:void(0)" class="closebtn" @click="closeNav('maintenanceNav')">&times;</a>
+    <a href="javascript:void(0)" class="closebtn" @click="closeOv('maintenanceOv')">&times;</a>
     <div class="overlay-content">
       <router-link :to="{ name: 'maintenanceScheduleNew', params: { status: 'created' } }">
         Add Maintenance
@@ -15,6 +15,6 @@
 <script>
 export default {
   name: 'App',
-  props: ['closeNav'],
+  props: ['closeOv'],
 };
 </script>

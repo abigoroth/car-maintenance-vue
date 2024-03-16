@@ -8,5 +8,4 @@
 #  updated_at :datetime         not null
 #
 class Part < ApplicationRecord
-  belongs_to :maintainable, polymorphic: true
 end

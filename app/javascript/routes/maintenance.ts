@@ -1,7 +1,7 @@
-const Index = () => import('@/pages/panel/IndexPage.vue');
+const Index = () => import('@/pages/panel/MaintenanceSchedulesPage.vue');
 const Contact = () => import('@/pages/panel/ContactPage.vue');
 const Vehicles = () => import('@/pages/panel/VehiclesPage.vue');
-const MaintenanceSchedules = () => import('@/pages/panel/MaintenanceSchedulesPage.vue');
+const MaintenanceSchedules = () => import('@/pages/panel/VehicleMaintenanceSchedulesPage.vue');
 const MaintenanceScheduleNew = () => import('@/pages/panel/MaintenanceScheduleNewPage.vue');
 const VehiclesNew = () => import('@/pages/panel/VehiclesNewPage.vue');
 
