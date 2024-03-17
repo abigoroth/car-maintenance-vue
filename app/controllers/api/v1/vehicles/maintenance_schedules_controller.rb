@@ -6,7 +6,7 @@ module Api
       class MaintenanceSchedulesController < ApiController
         before_action :set_maintenance_schedule, only: %i[send_notification destroy]
         def index
-          render json: vehicle.maintenance_schedules.with_part.history(params[:show_history]).to_json(include: :part)
+          render json: vehicle.maintenance_schedules.with_part.history(params[:show_history]).to_json(include: [:part, :vehicle])
         end
         def create
           maintenance_schedule = MaintenanceSchedule.new(maintenance_schedule_params.merge(user_id: current_user.id))
