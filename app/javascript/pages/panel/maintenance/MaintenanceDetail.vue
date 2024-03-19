@@ -43,7 +43,7 @@
           <dt class="col-sm-9">{{ maintenance_schedule.workshop_id }}</dt>
         </dl>
       </div>
-      <div class="text-center">
+      <div class="text-center" style="margin-bottom: 50px">
         <button
           v-if="maintenance_schedule.status === 'created'"
           class="btn btn-primary d-flex w-100 justify-content-center mb-2"

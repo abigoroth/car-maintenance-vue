@@ -82,7 +82,7 @@ export default {
   methods: {
     maintenanceSchedulePrep() {
       const data = JSON.parse(localStorage.getItem('maintenance_schedule'));
-      data.mileage = data.mileage.replace(',', '');
+      data.mileage = data.mileage ? data.mileage.replace(',', '') : data.mileage;
       console.log(data.date);
       const dateArray = data.date.split(' ');
       data.date = dateArray[4] + '-' + dateArray[2] + '-' + dateArray[0];

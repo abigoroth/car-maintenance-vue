@@ -25,7 +25,7 @@ module Api
       end
 
       def maintenance_schedule_params
-        params.permit(:status, :part_id, :date, :status, :note, :mileage, :price, :workshop_id)
+        params.permit(:status, :part_id, :date, :status, :note, :mileage, :price, :workshop_id, :price)
       end
     end
   end
