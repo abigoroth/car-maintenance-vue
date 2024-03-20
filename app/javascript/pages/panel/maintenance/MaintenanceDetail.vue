@@ -64,21 +64,37 @@
       </div>
     </div>
   </div>
+  <Loading ref="LoadingOverlay" :close-ov="closeOv" />
 </template>
 
 <script>
 import axios from 'axios';
 import { showToast } from '@/utils/showToast';
+import Loading from '@/pages/panel/util/Loading.vue';
 
 export default {
   name: 'App',
-  computed: {
-    maintenance_schedule() {
-      return JSON.parse(localStorage.getItem('maintenance_schedule'));
-    },
-    vehicle() {
-      return JSON.parse(localStorage.getItem('vehicle'));
-    },
+  components: { Loading },
+  data() {
+    return {
+      vehicle: {},
+      maintenance_schedule: {
+        part: {
+          name: '',
+          date: '',
+          mileage: '',
+          note: '',
+          price: '',
+          status: '',
+          workshop_id: '',
+        },
+      },
+      vehicle_id: this.$router.currentRoute.value.params.vehicle_id,
+      maintenance_schedule_id: this.$router.currentRoute.value.params.id,
+    };
+  },
+  async mounted() {
+    await this.fetchMaintenance();
   },
   methods: {
     async complete() {
@@ -86,7 +102,7 @@ export default {
         console.log(this.maintenance_schedule);
         const body = { status: 'completed' };
         await axios
-          .put('/api/v1/maintenance_schedules/' + this.maintenance_schedule.id, body)
+          .put('/api/v1/maintenance_schedules/' + this.maintenance_schedule_id, body)
           .then(() => {
             this.$router.go(-1);
             showToast('Maintenance updated.', 'success');
@@ -96,8 +112,28 @@ export default {
           });
       }
     },
+    async fetchMaintenance() {
+      this.openOv('LoadingOverlay');
+      const maintenance_result = await axios.get(
+        '/api/v1/vehicles/' +
+          this.vehicle_id +
+          '/maintenance_schedules/' +
+          this.maintenance_schedule_id +
+          '.json',
+      );
+      this.maintenance_schedule = maintenance_result.data;
+      this.vehicle = this.maintenance_schedule.vehicle;
+      localStorage.setItem('maintenance_schedule', JSON.stringify(this.maintenance_schedule));
+      this.closeOv('LoadingOverlay');
+    },
     edit() {
       this.$router.push({ name: 'editMaintenance' });
+    },
+    openOv(id) {
+      this.$refs[id].$el.style.width = '100%';
+    },
+    closeOv(id) {
+      this.$refs[id].$el.style.width = '0%';
     },
   },
 };
