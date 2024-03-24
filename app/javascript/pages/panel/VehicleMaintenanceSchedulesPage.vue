@@ -49,11 +49,14 @@ export default {
       maintenance_schedules: [],
       parts: [],
       showAdd: false,
-      showHistory: false,
+      showHistory: JSON.parse(localStorage.getItem('showHistory')),
       vehicleId: this.$router.currentRoute.value.params.vehicle_id,
     };
   },
   async mounted() {
+    if (localStorage.getItem('showHistory') !== 'undefined') {
+      localStorage.setItem('showHistory', 'false');
+    }
     await this.fetchData();
   },
   methods: {
@@ -99,6 +102,7 @@ export default {
     async fetchMaintenance(showHistory) {
       this.openOv('LoadingOverlay');
       this.showHistory = showHistory;
+      localStorage.setItem('showHistory', showHistory);
       const params = new URLSearchParams({ show_history: this.showHistory });
       const maintenance_result = await axios.get(
         '/api/v1/vehicles/' + this.vehicleId + '/maintenance_schedules.json',

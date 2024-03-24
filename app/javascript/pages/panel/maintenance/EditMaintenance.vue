@@ -20,9 +20,9 @@
               :key="month"
               href="#"
               class="btn btn-outline-dark btn-sm m-1"
-              @click="completed ? minusMonth(month) : addMonth(month)"
+              @click="completedData ? minusMonth(month) : addMonth(month)"
             >
-              {{ completed ? '-' : '+' }}{{ month }} month
+              {{ completedData ? '-' : '+' }}{{ month }} month
             </a>
           </div>
           <div class="field pb-25">
@@ -36,7 +36,7 @@
 
           <div v-if="advance">
             <div class="field pb-25">
-              <label for="vin_number">{{ completed ? 'Price' : 'Target Price' }}</label>
+              <label for="vin_number">{{ completedData ? 'Price' : 'Target Price' }}</label>
               <input v-model="maintenance_schedule.price" type="number" />
             </div>
 
@@ -48,6 +48,14 @@
             <div class="field pb-25">
               <label for="vin_number">Workshop</label>
               <input v-model="maintenance_schedule.workshop_id" />
+            </div>
+
+            <div class="field pb-25">
+              <label for="vin_number">Status</label>
+              <select v-model="maintenance_schedule.status">
+                <option value="created">Created</option>
+                <option value="completed">Completed</option>
+              </select>
             </div>
           </div>
 
@@ -69,7 +77,7 @@ export default {
   data() {
     return {
       months: ['1', '3', '6', '12', '24'],
-      completed: this.$router.currentRoute.value.params.status === 'completed',
+      completedData: this.$router.currentRoute.value.params.status === 'completed',
       advance: false,
       maintenance_schedule: this.maintenanceSchedulePrep(),
       parts: [],

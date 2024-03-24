@@ -19,6 +19,10 @@
       <h5 class="card-title">{{ maintenance_schedule.part.name }}</h5>
       <div>
         <dl class="row">
+          <dd class="col-sm-3">Car</dd>
+          <dt class="col-sm-9">{{ vehicle.make }} {{ vehicle.model }}</dt>
+        </dl>
+        <dl class="row">
           <dd class="col-sm-3">Date</dd>
           <dt class="col-sm-9">{{ maintenance_schedule.date }}</dt>
         </dl>
@@ -44,11 +48,7 @@
         </dl>
       </div>
       <div class="text-center" style="margin-bottom: 50px">
-        <button
-          v-if="maintenance_schedule.status === 'created'"
-          class="btn btn-primary d-flex w-100 justify-content-center mb-2"
-          @click="edit"
-        >
+        <button class="btn btn-primary d-flex w-100 justify-content-center mb-2" @click="edit">
           <span class="material-symbols-outlined"> edit </span>
           Edit Maintenance Schedule
         </button>
