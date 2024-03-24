@@ -26,7 +26,7 @@ class MaintenanceSchedule < ApplicationRecord
 
   include ActionView::Helpers::NumberHelper
 
-  scope :with_part, -> { includes(:part) }
+  scope :with_part_and_vehicle, -> { eager_load(:part, :vehicle) }
   scope :history, lambda { |show_history|
     (show_history == 'true' ? where(status: :completed) : where.not(status: :completed))
   }

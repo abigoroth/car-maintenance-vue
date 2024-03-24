@@ -4,6 +4,7 @@
     <MaintenanceScheduleList
       :maintenance_schedules="maintenance_schedules"
       :vehicle="vehicle"
+      :total="total"
       :del="del"
     />
   </div>
@@ -17,12 +18,15 @@ import { showToast } from '@/utils/showToast';
 import MaintenanceScheduleList from '@/pages/panel/maintenance/MaintenanceScheduleList.vue';
 import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleFilter.vue';
 import Loading from '@/pages/panel/util/Loading.vue';
+import { LoadingMix } from '@/pages/panel/util/LoadingMix';
 
 export default {
   name: 'App',
   components: { Loading, MaintenanceScheduleFilter, MaintenanceScheduleList },
+  mixins: [LoadingMix],
   data() {
     return {
+      total: 0,
       vehicle: {},
       maintenance_schedules: [],
       parts: [],
@@ -55,14 +59,9 @@ export default {
       const maintenance_result = await axios.get('/api/v1/maintenance_schedules.json', {
         params: params,
       });
-      this.maintenance_schedules = maintenance_result.data;
+      this.maintenance_schedules = maintenance_result.data.data;
+      this.total = maintenance_result.data.total;
       this.closeOv('LoadingOverlay');
-    },
-    openOv(id) {
-      this.$refs[id].$el.style.width = '100%';
-    },
-    closeOv(id) {
-      this.$refs[id].$el.style.width = '0%';
     },
   },
 };

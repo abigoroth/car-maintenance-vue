@@ -3,7 +3,8 @@ module Api
     class MaintenanceSchedulesController < ApiController
       before_action :set_maintenance_schedule, only: %i[update]
       def index
-        render json: current_user.maintenance_schedules.with_part.history(params[:show_history]).to_json(include: [:part, :vehicle])
+        @maintenance_schedules = current_user.maintenance_schedules.with_part_and_vehicle.history(params[:show_history])
+        render 'api/v1/vehicles/maintenance_schedules/index'
       end
 
       def update

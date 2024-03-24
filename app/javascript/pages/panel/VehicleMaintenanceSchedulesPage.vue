@@ -20,6 +20,7 @@
   <MaintenanceScheduleList
     :maintenance_schedules="maintenance_schedules"
     :vehicle="vehicle"
+    :total="total"
     :send-notification="sendNotification"
     :del="del"
     :vehicle-id="vehicleId"
@@ -35,12 +36,15 @@ import MaintenanceScheduleList from '@/pages/panel/maintenance/MaintenanceSchedu
 import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleFilter.vue';
 import ActionOverlay from '@/pages/panel/util/ActionOverlay.vue';
 import Loading from '@/pages/panel/util/Loading.vue';
+import { LoadingMix } from '@/pages/panel/util/LoadingMix';
 
 export default {
   name: 'App',
   components: { MaintenanceScheduleFilter, MaintenanceScheduleList, ActionOverlay, Loading },
+  mixins: [LoadingMix],
   data() {
     return {
+      total: 0,
       vehicle: {},
       maintenance_schedules: [],
       parts: [],
@@ -53,12 +57,6 @@ export default {
     await this.fetchData();
   },
   methods: {
-    openOv(id) {
-      this.$refs[id].$el.style.width = '100%';
-    },
-    closeOv(id) {
-      this.$refs[id].$el.style.width = '0%';
-    },
     del(vehicle_id, id) {
       if (confirm('Do you really want to delete?')) {
         axios
@@ -106,7 +104,8 @@ export default {
         '/api/v1/vehicles/' + this.vehicleId + '/maintenance_schedules.json',
         { params: params },
       );
-      this.maintenance_schedules = maintenance_result.data;
+      this.maintenance_schedules = maintenance_result.data.data;
+      this.total = maintenance_result.data.total;
       this.closeOv('LoadingOverlay');
     },
   },

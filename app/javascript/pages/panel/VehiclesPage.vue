@@ -25,13 +25,18 @@
     <div class="material-symbols-outlined delete-item" @click="del(vehicle.id)">delete</div>
   </div>
   <div class="mb-60"></div>
+  <Loading ref="LoadingOverlay" :close-ov="closeOv" />
 </template>
 
 <script>
 import axios from 'axios';
 import { showToast } from '@/utils/showToast';
+import { LoadingMix } from '@/pages/panel/util/LoadingMix';
+import Loading from '@/pages/panel/util/Loading.vue';
 export default {
   name: 'App',
+  components: { Loading },
+  mixins: [LoadingMix],
   data() {
     return {
       vehicles: [],
@@ -55,8 +60,10 @@ export default {
       }
     },
     async fetchData() {
+      this.openOv('LoadingOverlay');
       const result = await axios.get('/api/v1/vehicles/');
       this.vehicles = result.data;
+      this.closeOv('LoadingOverlay');
     },
   },
 };

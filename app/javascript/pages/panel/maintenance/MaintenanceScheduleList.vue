@@ -1,5 +1,19 @@
 <template>
   <div
+    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
+  >
+    <div class="row">
+      <div class="col-6 text-center">
+        <h3>Total</h3>
+        <span class="text-sm ml-2"> RM{{ total }} </span>
+      </div>
+      <div class="col-6 text-center">
+        <h3>Tasks</h3>
+        <span class="text-sm ml-2"> {{ maintenance_schedules.length }} </span>
+      </div>
+    </div>
+  </div>
+  <div
     v-for="maintenance_schedule in maintenance_schedules"
     :key="maintenance_schedule.id"
     class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
@@ -27,7 +41,7 @@
 <script>
 export default {
   name: 'App',
-  props: ['maintenance_schedules', 'vehicle', 'del', 'sendNotification', 'vehicleId'],
+  props: ['maintenance_schedules', 'vehicle', 'del', 'sendNotification', 'vehicleId', 'total'],
   mounted() {
     console.log(this.vehicle.plate_number);
   },

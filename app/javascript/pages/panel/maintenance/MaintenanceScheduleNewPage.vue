@@ -59,15 +59,20 @@
       </div>
     </div>
   </div>
+  <Loading ref="LoadingOverlay" :close-ov="closeOv" />
 </template>
 <script>
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { showToast } from '@/utils/showToast';
+import Loading from '@/pages/panel/util/Loading.vue';
+import { LoadingMix } from '@/pages/panel/util/LoadingMix';
 
 const router = useRouter();
 export default {
   name: 'App',
+  components: { Loading },
+  mixins: [LoadingMix],
   data() {
     return {
       months: ['1', '3', '6', '12', '24'],
@@ -86,11 +91,13 @@ export default {
     };
   },
   async mounted() {
+    this.openOv('LoadingOverlay');
     const part_result = await axios.get('/api/v1/parts/');
     this.parts = part_result.data;
     const status = this.$router.currentRoute.value.params.status;
     console.log(status);
     this.maintenance_schedule.status = status;
+    this.closeOv('LoadingOverlay');
   },
   methods: {
     addMonth(month) {
@@ -116,6 +123,7 @@ export default {
       this.$router.go(-1);
     },
     submit() {
+      this.openOv('LoadingOverlay');
       const vehicleId = this.$router.currentRoute.value.params.vehicle_id;
       const formData = new FormData();
       formData.append('part_id', this.maintenance_schedule.part_id);
@@ -130,10 +138,12 @@ export default {
         .post('/api/v1/vehicles/' + vehicleId + '/maintenance_schedules', formData, {})
         .then(() => {
           this.$router.push({ name: 'maintenanceSchedules', params: { vehicle_id: vehicleId } });
+          this.closeOv('LoadingOverlay');
           showToast('Maintenance Schedule Added', 'success');
         })
         .catch((error) => {
           console.log(error);
+          this.closeOv('LoadingOverlay');
           showToast(error.response.data.errors[0], 'error');
         });
     },
