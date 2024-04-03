@@ -29,6 +29,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      typescript: {},
       'eslint-import-resolver-custom-alias': {
         alias: {
           '@': './app/javascript',
