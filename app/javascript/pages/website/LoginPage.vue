@@ -7,15 +7,21 @@
         <span v-if="showMessage" class="header pb-25"> You've clicked on Submit button </span>
 
         <form @submit.prevent="submit">
-          <div class="field pb-25">
-            <label for="email">Email</label>
-            <input v-model="user.email" type="email" />
-          </div>
+          <v-text-field
+            v-model="user.email"
+            v-validate="'required|email'"
+            label="E-mail"
+            data-vv-name="email"
+            required
+          ></v-text-field>
 
-          <div class="field pb-25">
-            <label for="password">Password</label>
-            <input v-model="user.password" type="password" />
-          </div>
+          <v-text-field
+            v-model="user.password"
+            :type="'password'"
+            hint="At least 8 characters"
+            label="Password"
+            counter
+          ></v-text-field>
 
           <div class="field pb-25">
             <input class="submit" type="submit" name="submit" value="Continue" />

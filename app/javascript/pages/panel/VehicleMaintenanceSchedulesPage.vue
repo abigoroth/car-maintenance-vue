@@ -1,21 +1,17 @@
 <template>
-  <div class="header mt-2 position-relative">
-    <router-link
-      :to="{ name: 'vehicles' }"
-      style="left: 0"
-      class="item btn btn-sm btn-primary position-absolute font-weight-bold"
-    >
-      Back
-    </router-link>
-    <div
-      class="item btn btn-sm btn-primary position-absolute right"
-      style="right: 0"
-      @click="openOv('maintenanceOv')"
-    >
-      Add
-    </div>
-    <h2 class="text-center">{{ vehicle.plate_number }}</h2>
-  </div>
+  <v-toolbar>
+    <v-btn icon class="hidden-xs-only" :to="{ name: 'vehicles' }">
+      <v-icon icon="mdi-arrow-left" />
+    </v-btn>
+
+    <v-toolbar-title>{{ vehicle.plate_number }}</v-toolbar-title>
+
+    <v-spacer></v-spacer>
+
+    <v-btn icon class="hidden-xs-only" @click="openOv('maintenanceOv')">
+      <v-icon icon="mdi-plus" />
+    </v-btn>
+  </v-toolbar>
   <MaintenanceScheduleFilter :show-history="showHistory" :fetch-maintenance="fetchMaintenance" />
   <MaintenanceScheduleList
     :maintenance_schedules="maintenance_schedules"
