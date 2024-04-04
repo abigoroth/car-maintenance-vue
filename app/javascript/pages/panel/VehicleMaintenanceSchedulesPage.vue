@@ -1,6 +1,6 @@
 <template>
-  <v-toolbar color="blue-grey-darken-4" dark>
-    <v-btn icon class="hidden-xs-only" :to="{ name: 'vehicles' }">
+  <v-toolbar dark>
+    <v-btn class="hidden-xs-only" :to="{ name: 'vehicles' }">
       <v-icon icon="mdi-arrow-left" />
     </v-btn>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="blue-grey-darken-4" dark>
+  <v-toolbar dark>
     <v-toolbar-title>Your Vehicles</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon class="hidden-xs-only" :to="{ name: 'vehiclesNew' }">

@@ -1,62 +1,66 @@
 <template>
+  <v-toolbar dark>
+    <v-btn class="hidden-xs-only" @click="routerBack">
+      <v-icon icon="mdi-arrow-left" />
+    </v-btn>
+
+    <v-toolbar-title>Add Maintenance</v-toolbar-title>
+  </v-toolbar>
   <div class="form">
     <div class="form-box pt-25">
-      <div class="form-bg py-30 px-50">
-        <form @submit.prevent="submit">
-          <div class="field pb-25">
-            <label for="make">Part</label>
-            <select v-model="maintenance_schedule.part_id">
-              <option v-for="part in parts" :key="part.id" :value="part.id">
-                {{ part.name }}
-              </option>
-            </select>
-          </div>
+      <v-form @submit.prevent="submit">
+        <v-container>
+          <v-select
+            v-model="maintenance_schedule.part_id"
+            :items="parts"
+            item-title="name"
+            item-value="id"
+            label="Select part"
+          >
+          </v-select>
 
-          <div class="field pb-25">
-            <label for="date">Date</label>
-            <input v-model="maintenance_schedule.date" type="date" />
-            <a
-              v-for="month in months"
-              :key="month"
-              href="#"
-              class="btn btn-outline-dark btn-sm m-1"
-              @click="completed ? minusMonth(month) : addMonth(month)"
-            >
-              {{ completed ? '-' : '+' }}{{ month }} month
-            </a>
-          </div>
-          <div class="field pb-25">
-            <label for="mileage">{{
-              maintenance_schedule.status === 'completed' ? 'Mileage' : 'Target Mileage'
-            }}</label>
-            <input v-model="maintenance_schedule.mileage" type="number" />
-          </div>
+          <v-text-field v-model="maintenance_schedule.date" type="date" label="Date"></v-text-field>
+          <a
+            v-for="month in months"
+            :key="month"
+            href="#"
+            class="btn btn-outline-dark btn-sm m-1"
+            @click="completed ? minusMonth(month) : addMonth(month)"
+          >
+            {{ completed ? '-' : '+' }}{{ month }} month
+          </a>
+
+          <v-text-field
+            v-model="maintenance_schedule.mileage"
+            type="Mileage"
+            label="Mileage / Target Mileage"
+          ></v-text-field>
 
           <a href="#" @click="toggleAdvance">{{ advance ? 'Show less' : 'Show advance' }}</a>
 
           <div v-if="advance">
-            <div class="field pb-25">
-              <label for="vin_number">{{ completed ? 'Price' : 'Target Price' }}</label>
-              <input v-model="maintenance_schedule.price" type="number" />
-            </div>
+            <v-text-field
+              v-model="maintenance_schedule.price"
+              type="number"
+              label="Price / Target Price"
+            ></v-text-field>
 
-            <div class="field pb-25">
-              <label for="mileage">Note</label>
-              <input v-model="maintenance_schedule.note" type="text" />
-            </div>
+            <v-text-field v-model="maintenance_schedule.note" label="Note"></v-text-field>
 
-            <div class="field pb-25">
-              <label for="vin_number">Workshop</label>
-              <input v-model="maintenance_schedule.workshop_id" />
-            </div>
+            <v-text-field
+              v-model="maintenance_schedule.workshop_id"
+              label="Workshop"
+            ></v-text-field>
           </div>
 
           <div class="field pb-25">
-            <input class="submit" type="submit" name="submit" value="Add" />
-            <button class="btn btn-secondary w-100 p-2 mt-2" @click="routerBack">Cancel</button>
+            <v-btn class="submit btn-primary w-100 m-2" type="submit" name="submit" value="Add"
+              >Submit</v-btn
+            >
+            <v-btn class="btn btn-secondary w-100 m-2" @click="routerBack">Cancel</v-btn>
           </div>
-        </form>
-      </div>
+        </v-container>
+      </v-form>
     </div>
   </div>
   <Loading ref="LoadingOverlay" :close-ov="closeOv" />

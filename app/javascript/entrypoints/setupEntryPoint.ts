@@ -19,6 +19,48 @@ import '@mdi/font/css/materialdesignicons.css';
 const token = AuthService.getToken();
 // Vuetify
 const vuetify = createVuetify({
+  theme: {
+    defaultTheme: 'myCustomTheme',
+    themes: {
+      myCustomTheme: {
+        dark: true,
+        colors: {
+          background: '#1c1b1b',
+          surface: '#312a2a',
+          'surface-bright': '#413f3f',
+          'surface-light': '#4b4747',
+          'surface-variant': '#424242',
+          'on-surface-variant': '#565656',
+          primary: '#364c79',
+          'primary-darken-1': '#29384b',
+          secondary: '#496275',
+          'secondary-darken-1': '#2b3844',
+          error: '#B00020',
+          info: '#2196F3',
+          success: '#4c68af',
+          warning: '#FB8C00',
+        },
+        variables: {
+          'border-color': '#000000',
+          'border-opacity': 0.12,
+          'high-emphasis-opacity': 0.87,
+          'medium-emphasis-opacity': 0.6,
+          'disabled-opacity': 0.38,
+          'idle-opacity': 0.04,
+          'hover-opacity': 0.04,
+          'focus-opacity': 0.12,
+          'selected-opacity': 0.08,
+          'activated-opacity': 0.12,
+          'pressed-opacity': 0.12,
+          'dragged-opacity': 0.08,
+          'theme-kbd': '#212529',
+          'theme-on-kbd': '#383737',
+          'theme-code': '#626262',
+          'theme-on-code': '#000000',
+        },
+      },
+    },
+  },
   icons: {
     defaultSet: 'mdi',
     aliases,

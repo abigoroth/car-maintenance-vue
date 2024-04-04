@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="blue-grey-darken-4" dark>
+  <v-toolbar dark>
     <v-btn
       icon
       class="hidden-xs-only"
@@ -58,21 +58,21 @@
     </v-list-item>
 
     <v-list-item>
-      <button class="btn btn-primary d-flex w-100 justify-content-center" @click="edit">
+      <v-btn class="btn btn-primary d-flex w-100 justify-content-center" @click="edit">
         <span class="material-symbols-outlined"> edit </span>
         Edit Maintenance Schedule
-      </button>
+      </v-btn>
     </v-list-item>
 
     <v-list-item>
-      <button
+      <v-btn
         v-if="maintenance_schedule.status === 'created'"
         class="btn btn-primary d-flex w-100 justify-content-center"
         @click="complete"
       >
         <span class="material-symbols-outlined">call_missed_outgoing</span>
         Mark as completed
-      </button>
+      </v-btn>
     </v-list-item>
   </v-list>
   <Loading ref="LoadingOverlay" :close-ov="closeOv" />
