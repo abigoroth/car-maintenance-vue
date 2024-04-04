@@ -1,18 +1,16 @@
 <template>
-  <div class="header mt-2 bg-white">
-    <h3 class="text-center">Your Vehicles</h3>
-    <router-link
-      :to="{ name: 'vehiclesNew' }"
-      class="item btn btn-sm btn-primary position-absolute"
-      style="right: 10px; top: 10px"
-    >
-      Add
-    </router-link>
-  </div>
+  <v-toolbar color="blue-grey-darken-4" dark>
+    <v-toolbar-title>Your Vehicles</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn icon class="hidden-xs-only" :to="{ name: 'vehiclesNew' }">
+      <v-icon icon="mdi-plus" />
+    </v-btn>
+  </v-toolbar>
+
   <div
     v-for="vehicle in vehicles"
     :key="vehicle.id"
-    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
+    class="flex p-2 bg-white shadow-lg rounded-lg m-2 overflow-hidden position-relative rounded"
   >
     <router-link
       :to="{ name: 'maintenanceSchedules', params: { vehicle_id: vehicle.id } }"

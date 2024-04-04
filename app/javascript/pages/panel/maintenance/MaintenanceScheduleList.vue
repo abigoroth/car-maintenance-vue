@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
-  >
+  <div class="flex p-2 bg-white shadow-lg rounded-lg m-2 overflow-hidden position-relative rounded">
     <div class="row">
       <div class="col-6 text-center">
         <h3>Total</h3>
@@ -16,7 +14,7 @@
   <div
     v-for="maintenance_schedule in maintenance_schedules"
     :key="maintenance_schedule.id"
-    class="flex p-2 bg-white shadow-lg rounded-lg mt-3 overflow-hidden position-relative rounded"
+    class="flex p-2 bg-white shadow-lg rounded-lg m-2 overflow-hidden position-relative rounded"
   >
     <h3 class="font-bold inline-block" @click="store(maintenance_schedule)">
       {{ maintenance_schedule.part.name }}

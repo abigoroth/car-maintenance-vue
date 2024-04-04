@@ -16,7 +16,7 @@ import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { showToast } from '@/utils/showToast';
 import MaintenanceScheduleList from '@/pages/panel/maintenance/MaintenanceScheduleList.vue';
-import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleFilter.vue';
+import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleTab.vue';
 import Loading from '@/pages/panel/util/Loading.vue';
 import { LoadingMix } from '@/pages/panel/util/LoadingMix';
 

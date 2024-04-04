@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar>
+  <v-toolbar color="blue-grey-darken-4" dark>
     <v-btn icon class="hidden-xs-only" :to="{ name: 'vehicles' }">
       <v-icon icon="mdi-arrow-left" />
     </v-btn>
@@ -29,7 +29,7 @@
 import axios from 'axios';
 import { showToast } from '@/utils/showToast';
 import MaintenanceScheduleList from '@/pages/panel/maintenance/MaintenanceScheduleList.vue';
-import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleFilter.vue';
+import MaintenanceScheduleFilter from '@/pages/panel/maintenance/MaintenanceScheduleTab.vue';
 import ActionOverlay from '@/pages/panel/util/ActionOverlay.vue';
 import Loading from '@/pages/panel/util/Loading.vue';
 import { LoadingMix } from '@/pages/panel/util/LoadingMix';

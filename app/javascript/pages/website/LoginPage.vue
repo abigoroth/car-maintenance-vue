@@ -36,7 +36,7 @@
       </div>
     </div>
   </div>
-  <div class="text-center">Redirecting to panel</div>
+  <div v-if="loggedIn" class="text-center">Redirecting to panel</div>
 </template>
 
 <script setup lang="ts">

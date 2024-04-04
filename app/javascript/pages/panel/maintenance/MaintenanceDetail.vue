@@ -1,69 +1,80 @@
 <template>
-  <div class="card border-light mb-3">
-    <div class="card-header">
-      <div class="position-relative">
-        <a
-          href="#"
-          style="left: 0"
-          class="item btn btn-sm btn-primary position-absolute font-weight-bold"
-          @click="$router.go(-1)"
-        >
-          Back
-        </a>
-      </div>
-      <h4 class="text-center">
-        {{ vehicle.plate_number }}
-      </h4>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ maintenance_schedule.part.name }}</h5>
-      <div>
-        <dl class="row">
-          <dd class="col-sm-3">Car</dd>
-          <dt class="col-sm-9">{{ vehicle.make }} {{ vehicle.model }}</dt>
-        </dl>
-        <dl class="row">
-          <dd class="col-sm-3">Date</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.date }}</dt>
-        </dl>
-        <dl v-if="maintenance_schedule.mileage" class="row">
-          <dd class="col-sm-3">Mileage</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.mileage }}</dt>
-        </dl>
-        <dl v-if="maintenance_schedule.note" class="row">
-          <dd class="col-sm-3">Note</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.note }}</dt>
-        </dl>
-        <dl class="row">
-          <dd class="col-sm-3">Price</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.price }}</dt>
-        </dl>
-        <dl v-if="maintenance_schedule.status" class="row">
-          <dd class="col-sm-3">Status</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.status }}</dt>
-        </dl>
-        <dl v-if="maintenance_schedule.workshop_id" class="row">
-          <dd class="col-sm-3">Workshop</dd>
-          <dt class="col-sm-9">{{ maintenance_schedule.workshop_id }}</dt>
-        </dl>
-      </div>
-      <div class="text-center" style="margin-bottom: 50px">
-        <button class="btn btn-primary d-flex w-100 justify-content-center mb-2" @click="edit">
-          <span class="material-symbols-outlined"> edit </span>
-          Edit Maintenance Schedule
-        </button>
+  <v-toolbar color="blue-grey-darken-4" dark>
+    <v-btn
+      icon
+      class="hidden-xs-only"
+      :to="{ name: 'maintenanceSchedules', params: { vehicle_id: vehicle.id } }"
+    >
+      <v-icon icon="mdi-arrow-left" />
+    </v-btn>
 
-        <button
-          v-if="maintenance_schedule.status === 'created'"
-          class="btn btn-primary d-flex w-100 justify-content-center"
-          @click="complete"
-        >
-          <span class="material-symbols-outlined">call_missed_outgoing</span>
-          Mark as completed
-        </button>
-      </div>
-    </div>
-  </div>
+    <v-toolbar-title>{{ vehicle.plate_number }}</v-toolbar-title>
+  </v-toolbar>
+  <v-list lines="one">
+    <v-list-item>
+      <v-list-item-title class="text-center">{{
+        maintenance_schedule.part.name
+      }}</v-list-item-title>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item-title>Car</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ vehicle.make }} {{ vehicle.model }} {{ vehicle.plate_number }}
+      </v-list-item-subtitle>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title>Date</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ maintenance_schedule.date }}
+      </v-list-item-subtitle>
+    </v-list-item>
+    <v-list-item v-if="maintenance_schedule.mileage">
+      <v-list-item-title>Mileage</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ maintenance_schedule.mileage }}
+      </v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item v-if="maintenance_schedule.note">
+      <v-list-item-title>Note</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ maintenance_schedule.note }}
+      </v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item v-if="maintenance_schedule.price">
+      <v-list-item-title>Price</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ maintenance_schedule.price }}
+      </v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item v-if="maintenance_schedule.status">
+      <v-list-item-title>Status</v-list-item-title>
+      <v-list-item-subtitle>
+        {{ maintenance_schedule.status }}
+      </v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <button class="btn btn-primary d-flex w-100 justify-content-center" @click="edit">
+        <span class="material-symbols-outlined"> edit </span>
+        Edit Maintenance Schedule
+      </button>
+    </v-list-item>
+
+    <v-list-item>
+      <button
+        v-if="maintenance_schedule.status === 'created'"
+        class="btn btn-primary d-flex w-100 justify-content-center"
+        @click="complete"
+      >
+        <span class="material-symbols-outlined">call_missed_outgoing</span>
+        Mark as completed
+      </button>
+    </v-list-item>
+  </v-list>
   <Loading ref="LoadingOverlay" :close-ov="closeOv" />
 </template>
 

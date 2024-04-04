@@ -10,9 +10,9 @@
         Whatsapp
       </a>
     </li>
-    <li class="nav-item btn btn-danger" @click="requestPermission">Notification</li>
+    <li class="nav-item btn btn-danger" @click="setNotification">Set Notification</li>
     <li class="nav-item btn btn-danger" @click="getOsId">getOsId</li>
-    <li class="nav-item btn btn-danger" @click="logout">Logout</li>
+    <li class="nav-item btn btn-danger" @click="logoutCall">Logout</li>
   </ul>
 </template>
 <script>
@@ -23,26 +23,28 @@ import { showToast } from '@/utils/showToast';
 const authStore = useAuthStore();
 // import OneSignalVuePlugin from '@onesignal/onesignal-vue3';
 
-const logout = () => {
-  authStore.logout();
-};
-
-function requestPermission() {
-  console.log('Requesting permission...');
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      const granted_msg = 'Notification permission granted.';
-      console.log(granted_msg);
-      alert(granted_msg);
-    } else {
-      alert('Permission: ' + permission);
-    }
-  });
-}
-
 export default {
   name: 'App',
   methods: {
+    setNotification() {
+      console.log('Requesting permission...');
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          const granted_msg = 'Notification permission granted.';
+          console.log(granted_msg);
+          alert(granted_msg);
+        } else {
+          alert('Permission: ' + permission);
+        }
+      });
+    },
+    logoutCall() {
+      //send logout to backend /users/logout
+      axios.delete('/users/logout').then((result) => {
+        console.log(result);
+      });
+      authStore.logout();
+    },
     async getOsId() {
       const os_sub_id = localStorage.getItem('os_sub_id');
       const os_app_id = localStorage.getItem('os_app_id');

@@ -1,8 +1,8 @@
 <template>
   <BaseLayout>
-    <div class="wrapper">
+    <div class="">
       <div class="section bg-white">
-        <div class="container" style="margin-bottom: 70px">
+        <div class="" style="margin-bottom: 70px">
           <router-view />
         </div>
       </div>
