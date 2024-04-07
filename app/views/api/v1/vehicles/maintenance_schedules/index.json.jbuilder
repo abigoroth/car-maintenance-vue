@@ -1,4 +1,4 @@
-json.total number_with_delimiter(@maintenance_schedules.map{|x| x.read_attribute(:price) }.sum)
+json.total number_with_delimiter(@maintenance_schedules.map{|x| x.read_attribute(:price).nil? ? 0 : x.read_attribute(:price) }.sum)
 json.data do
   json.array! @maintenance_schedules do |maintenance_schedule|
     json.id maintenance_schedule.id

@@ -15,6 +15,7 @@ module Api
 
         def create
           maintenance_schedule = MaintenanceSchedule.new(maintenance_schedule_params.merge(user_id: current_user.id))
+          maintenance_schedule.price = 0 if maintenance_schedule.price.nil?
           if maintenance_schedule.save
             render json: maintenance_schedule
           else
