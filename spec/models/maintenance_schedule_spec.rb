@@ -14,6 +14,8 @@
 #  updated_at  :datetime         not null
 #  user_id     :integer
 #  price       :integer          default(0)
+#  notified    :date
+#  os_return   :text
 #
 # Indexes
 #

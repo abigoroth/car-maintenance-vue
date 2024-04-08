@@ -140,6 +140,8 @@ GEM
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     erubi (1.12.0)
+    et-orbi (1.2.11)
+      tzinfo
     ethon (0.16.0)
       ffi (>= 1.15.0)
     factory_bot (6.2.1)
@@ -153,6 +155,9 @@ GEM
       colorize (~> 0.7)
       ruby_parser (>= 3.19.1)
     ffi (1.16.3)
+    fugit (1.10.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
     has_scope (0.8.1)
@@ -257,6 +262,7 @@ GEM
     public_suffix (5.0.1)
     puma (6.3.0)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.7.1)
     rack (2.2.7)
     rack-cors (2.0.1)
@@ -383,6 +389,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -489,6 +499,7 @@ DEPENDENCIES
   sentry-ruby (~> 5.12)
   shoulda-matchers
   sidekiq
+  sidekiq-cron
   simplecov
   tzinfo-data
   vite_rails
