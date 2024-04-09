@@ -40,8 +40,9 @@
             <input v-model="vehicle.plate_number" type="text" />
           </div>
 
-          <a href="#" @click="toggleAdvance">{{ advance ? 'Show less' : 'Show advance' }}</a>
-
+          <a href="#" class="mb-2" @click="toggleAdvance">{{
+            advance ? 'Show less' : 'Show advance'
+          }}</a>
           <div v-if="advance">
             <div class="field pb-25">
               <label for="year">Year</label>
@@ -59,7 +60,7 @@
             </div>
           </div>
 
-          <div class="field pb-25">
+          <div class="field pb-25 pt-2">
             <input class="submit" type="submit" name="submit" value="Add" />
             <button class="btn btn-secondary w-100 p-2 mt-2" @click="routerBack">Cancel</button>
           </div>

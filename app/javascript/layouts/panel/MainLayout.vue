@@ -1,6 +1,6 @@
 <template>
   <BaseLayout>
-    <div class="">
+    <div class="wrapper">
       <div class="section bg-white">
         <div class="" style="margin-bottom: 70px">
           <router-view />

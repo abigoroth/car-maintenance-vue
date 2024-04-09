@@ -99,6 +99,9 @@ body {
   border-color: #dededf;
   border-style: solid;
   border-width: 0 1px;
+  footer {
+    max-width: 414px !important;
+  }
 }
 .mobile-nav {
   background: #f1f1f1;
