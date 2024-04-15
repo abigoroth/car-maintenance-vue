@@ -19,7 +19,7 @@ class NotificationJob < ApplicationJob
   def notify_owner(maintenance_schedule)
     return unless maintenance_schedule.user.os_id
 
-    HTTParty.post('https://onesignal.com/api/v1/notifications', body: {
+    party_return = HTTParty.post('https://onesignal.com/api/v1/notifications', body: {
       app_id: 'fa7fecdd-07eb-42c7-845c-48798f1b332d',
       include_aliases: {
         external_id: ["#{maintenance_schedule.user_id}"]
@@ -32,5 +32,9 @@ class NotificationJob < ApplicationJob
       'Content-Type' => 'application/json',
       'Authorization' => "Basic #{OneSignal.configure.app_key}"
     })
+    maintenance_schedule.update_columns(
+      notified: Date.today,
+      os_return: party_return.to_json
+    )
   end
 end

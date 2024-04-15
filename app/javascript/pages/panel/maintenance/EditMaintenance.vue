@@ -59,7 +59,7 @@
             </div>
           </div>
 
-          <div class="field pb-25">
+          <div class="field pb-25 pt-2">
             <input class="submit" type="submit" name="submit" value="Save" />
             <button class="btn btn-secondary w-100 p-2 mt-2" @click="routerBack">Cancel</button>
           </div>

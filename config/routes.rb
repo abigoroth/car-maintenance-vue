@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :administrators
   namespace :admin do
+      mount Sidekiq::Web => '/sidekiq'
       resources :allowlisted_jwts
       resources :maintenance_schedules do
         get :send_whatsapp_reminder
@@ -42,6 +43,5 @@ Rails.application.routes.draw do
   get '/panel(/*path)', to: 'application#panel', as: :panel
   get '/(*path)', to: 'application#website', as: :website
 
-  mount Sidekiq::Web => '/sidekiq'
   root to: 'application#website'
 end

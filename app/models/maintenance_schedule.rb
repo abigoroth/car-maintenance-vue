@@ -14,6 +14,8 @@
 #  updated_at  :datetime         not null
 #  user_id     :integer
 #  price       :integer          default(0)
+#  notified    :date
+#  os_return   :text
 #
 # Indexes
 #
@@ -30,7 +32,7 @@ class MaintenanceSchedule < ApplicationRecord
   scope :history, lambda { |show_history|
     (show_history == 'true' ? where(status: :completed) : where.not(status: :completed))
   }
-  scope :need_notify, -> { where(status: [:created, :overdue]) }
+  scope :need_notify, -> { where(status: [:created, :overdue]).where(notified: nil).where('date::date = CURRENT_DATE') }
   # overdue is when it passes the date but its on snooze
   enum :status, { completed: 0, created: 1, overdue: 2, delayed: 3 }, _prefix: :ms
 

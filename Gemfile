@@ -80,6 +80,7 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -91,7 +92,6 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-  gem 'selenium-webdriver'
 end
 
 group :test do
@@ -103,7 +103,6 @@ group :test do
   gem 'shoulda-matchers'
   # RSpec matchers for JSON API.
   gem 'jsonapi-rspec'
-  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'
 end
@@ -116,3 +115,4 @@ gem "sentry-rails", "~> 5.12"
 gem "administrate"
 gem "onesignal"
 gem "httparty"
+gem "sidekiq-cron"
