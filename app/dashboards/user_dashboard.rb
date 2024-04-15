@@ -21,6 +21,7 @@ class UserDashboard < Administrate::BaseDashboard
     sign_in_count: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    phone: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -30,7 +31,8 @@ class UserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    allowlisted_jwts
+    phone
+    email
     current_sign_in_at
     current_sign_in_ip
   ].freeze

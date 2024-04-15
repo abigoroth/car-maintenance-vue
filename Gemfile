@@ -116,3 +116,4 @@ gem "administrate"
 gem "onesignal"
 gem "httparty"
 gem "sidekiq-cron"
+gem 'rollbar'
