@@ -9,7 +9,6 @@ class PartDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    maintainable: Field::Polymorphic,
     name: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -22,7 +21,6 @@ class PartDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    maintainable
     name
     created_at
   ].freeze
@@ -31,7 +29,6 @@ class PartDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    maintainable
     name
     created_at
     updated_at
@@ -41,7 +38,6 @@ class PartDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    maintainable
     name
   ].freeze
 

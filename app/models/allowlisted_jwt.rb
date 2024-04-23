@@ -18,4 +18,5 @@
 #  index_allowlisted_jwts_on_user_id  (user_id)
 #
 class AllowlistedJwt < ApplicationRecord
+  belongs_to :user
 end

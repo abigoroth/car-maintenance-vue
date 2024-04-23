@@ -320,4 +320,5 @@ Devise.setup do |config|
     ]
     jwt.expiration_time = 365.day.to_i
   end
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
 end

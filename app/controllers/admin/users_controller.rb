@@ -1,5 +1,7 @@
 module Admin
   class UsersController < Admin::ApplicationController
+    protect_from_forgery except: :login_as
+    respond_to :html, :xml, :json
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -42,5 +44,18 @@ module Admin
 
     # See https://administrate-demo.herokuapp.com/customizing_controller_actions
     # for more information
+    def login_as
+      puts request.method == "POST"
+      if request.method == "POST"
+        # raise 'POST?'
+        @jwt = AllowlistedJwt.find_by(jti: params[:jwt])
+        @user = @jwt.user
+        sign_in(:user, @user)
+        respond_with @user, location: after_sign_in_path_for(@user)
+      elsif request.method == "GET"
+        # raise 'GET?'
+        @user = User.find(params[:user_id])
+      end
+    end
   end
 end

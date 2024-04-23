@@ -8,7 +8,10 @@ Rails.application.routes.draw do
       end
       resources :parts
       resources :service_reminders
-      resources :users
+      resources :users do
+        get :login_as
+        post :login_as
+      end
       resources :vehicles
       resources :workshops
       resources :administrators

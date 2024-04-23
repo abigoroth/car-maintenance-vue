@@ -1,0 +1,7 @@
+<%= form_with url: [:admin, @user, :login_as, format: 'json'], id: 'loginAs' do |f| %>
+  <%= f.text_field :jwt, value: @user.allowlisted_jwts.last.jti %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  document.getElementById("loginAs").submit();
+</script>
