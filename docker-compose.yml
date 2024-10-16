@@ -1,13 +1,15 @@
 x-app: &default-app
   build:
     context: "."
-    target: "app"
     args:
       - "RAILS_ENV=production"
       - "RUBY_VERSION=3.2.2"
-      - "NODE_VERSION=16.17.1-r0"
-      - "YARN_VERSION=1.22.19-r0"
+      - "NODE_VERSION=20.18.0"
+      - "YARN_VERSION=1.22.22"
       - "BUNDLER_VERSION=2.4.6"
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - "REDIS_URL=redis://redis:6379/1"
+      - "POSTGRES_PASSWORD=password"
   env_file:
     - ".env"
   restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
@@ -23,6 +25,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
       # POSTGRES_DB: "${POSTGRES_DB}"
     image: "postgres:15.3-alpine"
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
@@ -56,8 +59,11 @@ services:
           memory: "${DOCKER_WEB_MEMORY:-0}"
     ports:
       - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:3000}:${PORT:-3000}"
+    expose:
+      - 3000:3000
     profiles: ["web"]
     tty: true
+    command: "bundle exec rails server -b 0.0.0.0"
 
   worker:
     <<: *default-app
@@ -77,7 +83,7 @@ services:
     depends_on:
       - "postgres"
       - "redis"
-    command: "puma -p 28080 cable/config.ru"
+    command: "bundle exec puma -p 28080 cable/config.ru"
     deploy:
       resources:
         limits:
