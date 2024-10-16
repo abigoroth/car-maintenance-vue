@@ -58,7 +58,7 @@ services:
           cpus: "${DOCKER_WEB_CPUS:-0}"
           memory: "${DOCKER_WEB_MEMORY:-0}"
     ports:
-      - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:3000}:${PORT:-3000}"
+      - 3000:3000
     expose:
       - 3000:3000
     profiles: ["web"]
