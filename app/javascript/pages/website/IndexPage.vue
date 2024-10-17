@@ -4,7 +4,7 @@
   <div>
     <img :src="imgUrl" class="w-100" alt="" />
 
-    <p>Perkhidmatan peringatan penyelenggaraan kereta dapat sangat membantu dalam beberapa cara:</p>
+    <p>Perkhidmatan peringatan penyelenggaraan kenderaan dapat sangat membantu dalam beberapa cara:</p>
 
     <p>
       1. Mengingatkan Jadual Penyelenggaraan: Perkhidmatan peringatan ini akan menghantar peringatan
