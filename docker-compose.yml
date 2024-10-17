@@ -8,7 +8,7 @@ x-app: &default-app
       - "YARN_VERSION=1.22.22"
       - "BUNDLER_VERSION=2.4.6"
       - "POSTGRES_HOST_AUTH_METHOD=trust"
-      - "REDIS_URL=redis://redis:6379/1"
+      - "REDIS_URL=redis://:DI76HLxj8drYR6S3lpssrZikpxdOPBqgRAWoDmM7ASUmmvdyqZHSv0OOVquBGTlw@mc48ws0g4s4c04c8s44wk4go:6379/0"
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=YfIgwPo6b2HmWFyGdgQxJWtXiXV3c1GdodDO3OGJPRcwh08M9Lz0GfZsHosgcZ36"
       - "DATABASE_URL=postgres://postgres:YfIgwPo6b2HmWFyGdgQxJWtXiXV3c1GdodDO3OGJPRcwh08M9Lz0GfZsHosgcZ36@oos004koscco40w0gkowg000:5432/postgres"
@@ -18,23 +18,8 @@ x-app: &default-app
   stop_grace_period: "3s"
 
 services:
-  redis:
-    deploy:
-      resources:
-        limits:
-          cpus: "${DOCKER_REDIS_CPUS:-0}"
-          memory: "${DOCKER_REDIS_MEMORY:-0}"
-    image: "redis:7.0.11-alpine"
-    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
-    stop_grace_period: "3s"
-    volumes:
-      - "redis:/data"
-    profiles: ["redis"]
-
   web:
     <<: *default-app
-    depends_on:
-      - "redis"
     deploy:
       resources:
         limits:
@@ -50,8 +35,6 @@ services:
 
   worker:
     <<: *default-app
-    depends_on:
-      - "redis"
     command: "bundle exec sidekiq -C config/sidekiq.yml"
     deploy:
       resources:
@@ -62,8 +45,6 @@ services:
 
   cable:
     <<: *default-app
-    depends_on:
-      - "redis"
     command: "bundle exec puma -p 28080 cable/config.ru"
     deploy:
       resources:
@@ -74,5 +55,3 @@ services:
       - "${DOCKER_CABLE_PORT_FORWARD:-127.0.0.1:28080}:28080"
     profiles: ["cable"]
 
-volumes:
-  redis: {}
