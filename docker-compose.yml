@@ -34,7 +34,6 @@ services:
   web:
     <<: *default-app
     depends_on:
-      - "postgres"
       - "redis"
     deploy:
       resources:
@@ -52,7 +51,6 @@ services:
   worker:
     <<: *default-app
     depends_on:
-      - "postgres"
       - "redis"
     command: "bundle exec sidekiq -C config/sidekiq.yml"
     deploy:
@@ -65,7 +63,6 @@ services:
   cable:
     <<: *default-app
     depends_on:
-      - "postgres"
       - "redis"
     command: "bundle exec puma -p 28080 cable/config.ru"
     deploy:
@@ -78,5 +75,4 @@ services:
     profiles: ["cable"]
 
 volumes:
-  postgres: {}
   redis: {}
