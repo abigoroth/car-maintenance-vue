@@ -9,31 +9,15 @@ x-app: &default-app
       - "BUNDLER_VERSION=2.4.6"
       - "POSTGRES_HOST_AUTH_METHOD=trust"
       - "REDIS_URL=redis://redis:6379/1"
-      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=YfIgwPo6b2HmWFyGdgQxJWtXiXV3c1GdodDO3OGJPRcwh08M9Lz0GfZsHosgcZ36"
+      - "DATABASE_URL=postgres://postgres:YfIgwPo6b2HmWFyGdgQxJWtXiXV3c1GdodDO3OGJPRcwh08M9Lz0GfZsHosgcZ36@oos004koscco40w0gkowg000:5432/postgres"
   env_file:
     - ".env"
   restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
   stop_grace_period: "3s"
 
 services:
-  postgres:
-    deploy:
-      resources:
-        limits:
-          cpus: "${DOCKER_POSTGRES_CPUS:-0}"
-          memory: "${DOCKER_POSTGRES_MEMORY:-0}"
-    environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_HOST_AUTH_METHOD: "trust"
-      # POSTGRES_DB: "${POSTGRES_DB}"
-    image: "postgres:15.3-alpine"
-    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
-    stop_grace_period: "3s"
-    volumes:
-      - "postgres:/var/lib/postgresql/data"
-    profiles: ["postgres"]
-
   redis:
     deploy:
       resources:
